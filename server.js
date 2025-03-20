@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const mysql = require('mysql2/promise');
 const financeTracker = require('./financeTracker.js');
 
-const dbConfig = mysql.createConnection({
+const dbConfig = ({
     host: '127.0.0.1',
     user: 'root',
     password: 'Kirikuk123$',
