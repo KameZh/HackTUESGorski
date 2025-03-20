@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
             let amount = entry.querySelector("input[name='sum[]']").value;
             let reasonSelect = entry.querySelector("select[name='income-reason[]']");
-            let reason = reasonSelect.value === "other" 
-                ? entry.querySelector("input[name='custom-income-reason[]']").value 
+            let reason = reasonSelect.value === "other"
+                ? entry.querySelector("input[name='custom-income-reason[]']").value
                 : reasonSelect.value;
 
             if (amount && reason) {
@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("#outcome-entries .outcome-entry").forEach(entry => {
             let amount = entry.querySelector("input[name='sum[]']").value;
             let reasonSelect = entry.querySelector("select[name='outcome-reason[]']");
-            let reason = reasonSelect.value === "other" 
-                ? entry.querySelector("input[name='custom-outcome-reason[]']").value 
+            let reason = reasonSelect.value === "other"
+                ? entry.querySelector("input[name='custom-outcome-reason[]']").value
                 : reasonSelect.value;
 
             if (amount && reason) {
@@ -31,26 +31,23 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         try {
-            console.log("Sending data to backend...");
-
-            // Send income data, then outcome data, then calculate savings
-            await fetch("/finance/add-income", { 
+            await fetch("/finance/add-income", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ entries: incomeEntries }) 
-            })
+                body: JSON.stringify({ entries: incomeEntries })
+            });
+
             await fetch("/finance/add-outcome", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ entries: outcomeEntries })
-            })
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ entries: outcomeEntries })
+            });
+
             const response = await fetch("/finance/calculate-savings", {
                 method: "GET",
                 headers: { "Accept": "application/json" }
-
-            
             });
-            console.log(response)
+
             if (!response.ok) {
                 console.error("Error fetching savings:", await response.text());
                 throw new Error("Server error");
@@ -58,10 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
 
-            console.log("Savings received:", data);
-
-            document.getElementById("savings-result").textContent = `Спестявания: ${data.savings.toFixed(2)} лв`;
-            document.getElementById("spending-result").textContent = `Разходи: ${data.spending.toFixed(2)} лв`;
+            document.getElementById("savings-result").textContent = `Препоръчителни спестявания: ${data.savings.toFixed(2)} лв`;
+            document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване: ${data.spending.toFixed(2)} лв`;
 
         } catch (error) {
             console.error("Fetch Error:", error);
@@ -69,3 +64,65 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+// Function to add more income entries
+function addIncomeEntry() {
+    let incomeDiv = document.createElement("div");
+    incomeDiv.classList.add("income-entry");
+    incomeDiv.innerHTML = `
+        <div style="display: flex; align-items: center;">
+            <div style="flex-grow: 1;">
+                <label>Сума:</label>
+                <input type="number" name="sum[]" required style="width: 100px;" />
+                <br />
+                <label>Причина за доход:</label>
+                <select name="income-reason[]" required onchange="toggleCustomReason(this)">
+                    <option value="job">Работа</option>
+                    <option value="other">Друго</option>
+                </select>
+                <br />
+                <input type="text" name="custom-income-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none; width: 120px;" />
+            </div>
+            <button type="button" class="remove-entry" onclick="removeEntry(this)" 
+                style="padding: 2px 5px; background: red; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">X</button>
+        </div>
+    `;
+    document.getElementById("income-entries").appendChild(incomeDiv);
+}
+
+// Function to add more outcome entries
+function addOutcomeEntry() {
+    let outcomeDiv = document.createElement("div");
+    outcomeDiv.classList.add("outcome-entry");
+    outcomeDiv.innerHTML = `
+        <div style="display: flex; align-items: center;">
+            <div style="flex-grow: 1;">
+                <label>Сума:</label>
+                <input type="number" name="sum[]" required style="width: 100px;" />
+                <br />
+                <label>Причина за разход:</label>
+                <select name="outcome-reason[]" required onchange="toggleCustomReason(this)">
+                    <option value="bills">Сметки</option>
+                    <option value="entertainment">Развлечения</option>
+                    <option value="other">Друго</option>
+                </select>
+                <br />
+                <input type="text" name="custom-outcome-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none; width: 120px;" />
+            </div>
+            <button type="button" class="remove-entry" onclick="removeEntry(this)" 
+                style="padding: 2px 5px; background: red; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">X</button>
+        </div>
+    `;
+    document.getElementById("outcome-entries").appendChild(outcomeDiv);
+}
+
+// Function to remove an added entry
+function removeEntry(button) {
+    button.closest(".income-entry, .outcome-entry").remove();
+}
+
+// Show custom reason input when "Other" is selected
+function toggleCustomReason(selectElement) {
+    let customInput = selectElement.parentElement.querySelector(".custom-reason");
+    customInput.style.display = selectElement.value === "other" ? "block" : "none";
+}

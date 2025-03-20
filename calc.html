@@ -6,6 +6,11 @@
     <title>Gorski Finance Calculator</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
+    <script>
+      window.addEventListener("scroll", function () {
+        document.body.classList.toggle("scrolled", window.scrollY > 50);
+      });
+    </script>
   </head>
   <body>
     <header>
@@ -38,21 +43,20 @@
             <form id="finance-form" action="/calc" method="post">
                 <h3>Доходи</h3>
                 <br>
-              <div id="income-entries">
-                <div class="income-entry">
-                  <label for="sum">Сума:</label>
-                  <input type="number" id="sum" name="sum[]" required />
-                  <br />
-                  <label for="income-reason">Причина за доход:</label>
-                  <select id="income-reason" name="income-reason[]" required onchange="toggleCustomReason(this)">
-                    <option value="job">Работа</option>
-                    <option value="other">Друго</option>
-                  </select>
-                  <br />
-                  <input type="text" name="custom-income-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none;" />
-                </div>
+                <div id="income-entries">
+                  <div class="income-entry">
+                      <label>Сума:</label>
+                      <input type="number" name="sum[]" required />
+                      <br />
+                      <label>Причина за доход:</label>
+                      <select name="income-reason[]" required onchange="toggleCustomReason(this)">
+                          <option value="job">Работа</option>
+                          <option value="other">Друго</option>
+                      </select>
+                      <br />
+                      <input type="text" name="custom-income-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none;" />
+                  </div>
               </div>
-              <br>
               <button type="button" onclick="addIncomeEntry()">Добави още доход</button>
               <br>
               <hr>
@@ -60,21 +64,20 @@
               <br>
               <div id="outcome-entries">
                 <div class="outcome-entry">
-                  <label for="sum">Сума:</label>
-                  <input type="number" id="sum" name="sum[]" required />
-                  <br />
-                  <label for="outcome-reason">Причина за разход:</label>
-                  <select id="outcome-reason" name="outcome-reason[]" required onchange="toggleCustomReason(this)">
-                    <option value="bills">Сметки</option>
-                    <option value="entertainment">Развлечения</option>
-                    <option value="other">Друго</option>
-                  </select>
-                  <br />
-                  <input type="text" name="custom-outcome-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none;" />
+                    <label>Сума:</label>
+                    <input type="number" name="sum[]" required />
+                    <br />
+                    <label>Причина за разход:</label>
+                    <select name="outcome-reason[]" required onchange="toggleCustomReason(this)">
+                        <option value="bills">Сметки</option>
+                        <option value="entertainment">Развлечения</option>
+                        <option value="other">Друго</option>
+                    </select>
+                    <br />
+                    <input type="text" name="custom-outcome-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none;" />
                 </div>
-              </div>
-              <br>
-              <button type="button" onclick="addOutcomeEntry()">Добави още разход</button>
+            </div>
+            <button type="button" onclick="addOutcomeEntry()">Добави още разход</button>
               <br />
               <button type="submit">Изчисли</button>
             </form>
@@ -104,5 +107,5 @@
     <script src="financeTracker.js"></script>
     
   <script src="script.js"></script>
-body>
+<body>
 </html>
