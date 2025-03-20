@@ -13,6 +13,7 @@ body {
   text-align: center;
   font-family: "Roboto", sans-serif;
   color: #333;
+  transition: background-color 0.3s ease;
 }
 
 header {
@@ -28,6 +29,7 @@ header {
   padding: 20px;
   z-index: 10;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .logo {
@@ -67,6 +69,7 @@ header {
   margin: 0 10px;
   text-decoration: none;
   color: #333;
+  transition: color 0.3s ease;
 }
 
 .menu a img {
@@ -111,6 +114,7 @@ main {
   padding: 20px;
   position: relative;
   z-index: 2;
+  transition: background-color 0.3s ease;
 }
 
 .content {
@@ -121,12 +125,28 @@ main {
   background-color: rgb(232, 232, 232);
   padding: 20px;
   border-radius: 10px;
+  transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+.top-row {
+  flex: 1 1 100%;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  font-size: 20px;
+  color: #333;
+  background: #f4f4f9; /* Match existing background color */
+  border: 2px solid green; /* Match existing border color */
+  transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
 .left-column {
@@ -137,6 +157,24 @@ main {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 20px;
+  background: #f4f4f9; /* Match existing background color */
+  border: 2px solid green; /* Match existing border color */
+  transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.left-column ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.left-column li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+.left-column li:hover {
+  color: green;
 }
 
 .right-column {
@@ -148,12 +186,20 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #f4f4f9; /* Match existing background color */
+  border: 2px solid green; /* Match existing border color */
+  transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
 .right-column img {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.right-column img:hover {
+  transform: scale(1.05);
 }
 
 footer {
@@ -166,6 +212,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
 .footer-content {
@@ -175,6 +222,7 @@ footer {
 .footer-content a {
   color: #fff;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .footer-menu {
@@ -187,7 +235,7 @@ footer {
 .footer-menu a {
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
   margin-bottom: 5px;
   margin: 0 10px;
 }
@@ -205,11 +253,18 @@ footer {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
   font-size: 25px;
+  transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
 .top-head h2 {
   font-size: 2em;
   margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.top-head small {
+  font-size: 0.8em;
+  color: #666;
 }
 
 .left-column a {
@@ -220,7 +275,7 @@ footer {
   padding: 100px 30px;
   margin: 20px 0;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
   margin-bottom: 5px;
   color: black;
 }
@@ -238,6 +293,7 @@ form {
   border-radius: 10px;
   width: 100%;
   max-width: 400px;
+  transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
 .container {
@@ -252,6 +308,12 @@ input[type="password"] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: green;
 }
 
 button {
@@ -262,6 +324,7 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
