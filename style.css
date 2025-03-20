@@ -88,7 +88,7 @@ header {
   height: 300px;
   overflow: hidden;
   margin-top: 20px;
-  border-bottom: 5px solid green; /* Re-added green color */
+  border-bottom: 5px solid green;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,9 +144,34 @@ main {
   margin: 0 auto;
   font-size: 20px;
   color: #333;
-  background: #f4f4f9; /* Match existing background color */
-  border: 2px solid green; /* Match existing border color */
+  background: #f4f4f9;
+  border: 2px solid green;
   transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.tag {
+  flex: 1 1 100%;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0;
+  padding: 10px;
+  background: #ffffff;
+  border: 2px solid green;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: font-size 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+}
+
+.tag:hover {
+  color: green;
+  background-color: #f4f4f9;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .left-column {
@@ -157,8 +182,8 @@ main {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 20px;
-  background: #f4f4f9; /* Match existing background color */
-  border: 2px solid green; /* Match existing border color */
+  background: #f4f4f9;
+  border: 2px solid green;
   transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
@@ -170,10 +195,11 @@ main {
 .left-column li {
   margin-bottom: 10px;
   line-height: 1.6;
-  transition: color 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .left-column li:hover {
+  transform: scale(1.05);
   color: green;
 }
 
@@ -200,6 +226,26 @@ main {
 
 .right-column img:hover {
   transform: scale(1.05);
+}
+
+.bottom-row {
+  flex: 1 1 100%;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  font-size: 20px;
+  color: #333;
+  background: #f4f4f9;
+  border: 2px solid green;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.bottom-row p {
+  margin: 0;
+  line-height: 1.6;
 }
 
 footer {
@@ -324,11 +370,15 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid green;
 }
 
 button:hover {
-  opacity: 0.8;
+  background-color: green;
+  transform: scale(1.05);
 }
 
 span.psw {
