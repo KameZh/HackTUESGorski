@@ -225,7 +225,7 @@ main {
 }
 
 .right-column img:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .bottom-row {
@@ -370,15 +370,16 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Re-add transform transition */
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border: 2px solid green;
+  transform-origin: center; /* Ensure the button scales from the center */
 }
 
 button:hover {
   background-color: green;
-  transform: scale(1.05);
+  transform: scale(1.03); /* Re-add transform to scale the button */
 }
 
 span.psw {
