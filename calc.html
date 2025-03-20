@@ -36,6 +36,8 @@
             <hr />
             <br />
             <form id="finance-form" action="/calc" method="post">
+                <h3>Доходи</h3>
+                <br>
               <div id="income-entries">
                 <div class="income-entry">
                   <label for="sum">Сума:</label>
@@ -50,8 +52,12 @@
                   <input type="text" name="custom-income-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none;" />
                 </div>
               </div>
+              <br>
               <button type="button" onclick="addIncomeEntry()">Добави още доход</button>
-              <br />
+              <br>
+              <hr>
+              <h3>Разходи</h3>
+              <br>
               <div id="outcome-entries">
                 <div class="outcome-entry">
                   <label for="sum">Сума:</label>
@@ -67,6 +73,7 @@
                   <input type="text" name="custom-outcome-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none;" />
                 </div>
               </div>
+              <br>
               <button type="button" onclick="addOutcomeEntry()">Добави още разход</button>
               <br />
               <button type="submit">Изчисли</button>
