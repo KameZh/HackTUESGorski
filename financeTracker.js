@@ -5,6 +5,7 @@ const cors = require("cors");
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cors({ origin: "*" })); // Allow requests from any origin
 
 let incomes = [];
 let outcomes = [];
@@ -38,10 +39,10 @@ app.post("/add-outcome", (req, res) => {
 
     res.json({ message: "Outcome added successfully", outcomes });
 });
-
 app.get("/calculate-savings", (req, res) => {
     const totalIncome = incomes.reduce((sum, income) => sum + income.amount, 0);
     const totalOutcome = outcomes.reduce((sum, outcome) => sum + outcome.amount, 0);
+    console.log("in /calculate-savings")
 
     if (totalIncome === 0) {
         return res.status(400).json({ error: "No income data available" });
@@ -58,8 +59,11 @@ app.get("/calculate-savings", (req, res) => {
         spendPercentage = 50;
     }
 
-    const savings = (totalIncome * savePercentage) / 100;
-    const spending = (totalIncome * spendPercentage) / 100;
+    console.log(totalIncome)
+    console.log(totalOutcome)
+
+    const savings = ((totalIncome - totalOutcome) * savePercentage) / 100;
+    const spending = ((totalIncome - totalOutcome) * spendPercentage) / 100;
 
     res.json({
         totalIncome,
