@@ -9,8 +9,10 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: white;
+  background-color: #f4f4f9;
   text-align: center;
+  font-family: "Roboto", sans-serif;
+  color: #333;
 }
 
 header {
@@ -19,12 +21,13 @@ header {
   left: 0;
   width: 100%;
   height: 60px;
-  background: green;
+  background: green; /* Re-added green color */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 20px;
   z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -52,6 +55,7 @@ header {
   height: 40px;
   background-color: white;
   border-radius: 50%;
+  margin-right: 10px;
 }
 
 .menu {
@@ -59,9 +63,15 @@ header {
   gap: 15px;
 }
 
+.menu a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+}
+
 .menu a img {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   transition: 0.3s;
 }
 
@@ -72,9 +82,14 @@ header {
 .banner {
   position: relative;
   width: 100%;
-  height: 450px;
+  height: 300px;
   overflow: hidden;
   margin-top: 20px;
+  border-bottom: 5px solid green; /* Re-added green color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("./img/fa.png") no-repeat center center/cover;
 }
 
 .banner img {
@@ -142,10 +157,10 @@ main {
 
 footer {
   width: 100%;
-  background-color: black;
+  background-color: #333;
   color: white;
   text-align: center;
-  padding: 10px 0;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -157,7 +172,8 @@ footer {
 }
 
 .footer-content a {
-  color: white;
+  color: #fff;
+  text-decoration: none;
 }
 
 .footer-menu {
@@ -168,17 +184,18 @@ footer {
 }
 
 .footer-menu a {
-  color: white;
+  color: #fff;
   text-decoration: none;
   transition: color 0.3s;
   margin-bottom: 5px;
+  margin: 0 10px;
 }
 
 .footer-menu a:hover {
   color: gray;
 }
 
-#video-header {
+.top-head {
   flex: 1 1 100%;
   text-align: center;
   background-color: #ffffff;
@@ -187,6 +204,11 @@ footer {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
   font-size: 25px;
+}
+
+.top-head h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
 }
 
 .left-column a {
@@ -203,19 +225,7 @@ footer {
 }
 .left-column a:hover {
   opacity: 0.6;
-  color: green;
-}
-
-#k2 {
-  width: 150%;
-  height: auto;
-  border-radius: 10px;
-}
-
-#mtb {
-  width: 120%;
-  height: auto;
-  border-radius: 10px;
+  color: green; /* Re-added green color */
 }
 
 form {
@@ -273,4 +283,13 @@ span.rmb {
     display: block;
     float: none;
   }
+}
+
+.scrolled header {
+  background-color: #333;
+  color: #fff;
+}
+
+.scrolled .menu a {
+  color: #fff;
 }
