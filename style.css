@@ -190,6 +190,9 @@ main {
 .left-column ul {
   list-style-type: disc;
   padding-left: 20px;
+  padding-top: 35px;
+  padding-bottom: 20px;
+  align-items: center;
 }
 
 .left-column li {
