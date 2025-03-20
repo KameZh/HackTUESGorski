@@ -1,2 +1,2 @@
 # HackTUESGorski
-Team Gorski in HackTUES11 "Hack the weaalth"
+Project for HackTUES11 "Hack the wealth" from team Gorski 
