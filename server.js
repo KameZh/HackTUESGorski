@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2/promise');
 const financeTracker = require('./financeTracker.js');
-const { getGeminiResponse } = require("./geminiAi.js");
 
 const dbConfig = ({
     host: '127.0.0.1',
@@ -24,14 +23,6 @@ app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
-
-async function main() {
-    const userInput = "How can I save money effectively?"; // Example input
-    const aiResponse = await getGeminiResponse(userInput);
-    console.log("AI Response:", aiResponse);
-  }
-  
-  main();
 
 const PORT = 7700;
 
