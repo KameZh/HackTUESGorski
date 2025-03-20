@@ -384,6 +384,11 @@ button {
   font-size: 35px;
 }
 
+button.add {
+  background-color: green;
+  font-size: 15px;
+}
+
 button:hover {
   background-color: green;
   transform: scale(1.02); /* Re-add transform to scale the button */
