@@ -21,7 +21,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 80px;
   background: green;
   display: flex;
   justify-content: space-between;
@@ -36,9 +36,9 @@ header {
   display: flex;
   align-items: center;
   color: white;
-  font-size: 25px;
+  font-size: 35px;
   font-weight: bold;
-  gap: 10px;
+  gap: 20px;
 }
 
 .logo span {
@@ -48,13 +48,13 @@ header {
 }
 
 .logo span small {
-  font-size: 12px;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.733);
 }
 
 .logo-img {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   background-color: white;
   border-radius: 50%;
   margin-right: 10px;
@@ -62,19 +62,19 @@ header {
 
 .menu {
   display: flex;
-  gap: 15px;
+  gap: 25px;
 }
 
 .menu a {
-  margin: 0 10px;
+  margin: 0 15px;
   text-decoration: none;
   color: #333;
   transition: color 0.3s ease;
 }
 
 .menu a img {
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   transition: 0.3s;
 }
 
@@ -85,9 +85,9 @@ header {
 .banner {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 420px;
   overflow: hidden;
-  margin-top: 20px;
+  margin-top: 30px;
   border-bottom: 5px solid green;
   display: flex;
   justify-content: center;
@@ -109,7 +109,7 @@ body.scrolled .banner img {
 main {
   flex: 1;
   margin: 20px;
-  font-size: 18px;
+  font-size: 25px;
   background: white;
   padding: 20px;
   position: relative;
@@ -142,17 +142,18 @@ main {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  font-size: 20px;
+  font-size: 30px;
   color: #333;
   background: #f4f4f9;
   border: 2px solid green;
   transition: background-color 0.3s ease, padding 0.3s ease;
+  line-height: 1.6;
 }
 
 .tag {
   flex: 1 1 100%;
   text-align: center;
-  font-size: 24px;
+  font-size: 35px;
   font-weight: bold;
   margin: 20px 0;
   padding: 10px;
@@ -187,22 +188,23 @@ main {
   transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
-.left-column ul {
+.list {
   list-style-type: disc;
   padding-left: 20px;
-  padding-top: 35px;
-  padding-bottom: 20px;
+  padding-top: 40px; /* Adjusted padding to center text vertically */
+  padding-bottom: 40px; /* Adjusted padding to center text vertically */
   align-items: center;
+  font-size: 30px;
 }
 
 .left-column li {
-  margin-bottom: 10px;
-  line-height: 1.6;
+  margin: 20px auto;
+  line-height: 1.8;
   transition: transform 0.3s ease;
 }
 
 .left-column li:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
   color: green;
 }
 
@@ -228,7 +230,7 @@ main {
 }
 
 .right-column img:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .bottom-row {
@@ -239,15 +241,11 @@ main {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  font-size: 20px;
+  font-size: 30px;
   color: #333;
   background: #f4f4f9;
   border: 2px solid green;
   transition: background-color 0.3s ease, padding 0.3s ease;
-}
-
-.bottom-row p {
-  margin: 0;
   line-height: 1.6;
 }
 
@@ -262,6 +260,7 @@ footer {
   align-items: center;
   margin-top: 20px;
   transition: background-color 0.3s ease;
+  font-size: 20px;
 }
 
 .footer-content {
@@ -269,9 +268,13 @@ footer {
 }
 
 .footer-content a {
-  color: #fff;
+  color: green;
   text-decoration: none;
   transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+  color: gray;
 }
 
 .footer-menu {
@@ -378,11 +381,12 @@ button {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border: 2px solid green;
   transform-origin: center; /* Ensure the button scales from the center */
+  font-size: 35px;
 }
 
 button:hover {
   background-color: green;
-  transform: scale(1.03); /* Re-add transform to scale the button */
+  transform: scale(1.02); /* Re-add transform to scale the button */
 }
 
 span.psw {
