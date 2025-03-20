@@ -215,7 +215,8 @@ main {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Added to make the box flexible */
+  justify-content: flex-start; /* Align items to the start */
   align-items: center;
   background: #f4f4f9; /* Match existing background color */
   border: 2px solid green; /* Match existing border color */
@@ -376,11 +377,11 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Re-add transform transition */
+  transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border: 2px solid green;
-  transform-origin: center; /* Ensure the button scales from the center */
+  transform-origin: center; 
   font-size: 35px;
 }
 
@@ -391,7 +392,7 @@ button.add {
 
 button:hover {
   background-color: green;
-  transform: scale(1.02); /* Re-add transform to scale the button */
+  transform: scale(1.02); 
 }
 
 span.psw {
@@ -418,11 +419,20 @@ span.rmb {
 }
 
 .scrolled .menu a img {
-  background-color: white; /* Add white background */
-  border-radius: 50%; /* Make it circular */
-  padding: 5px; /* Add some padding */
+  background-color: white;
+  border-radius: 50%;
+  padding: 5px;
 }
 
 .scrolled .menu a {
   color: #fff;
+}
+
+.fixed-header {
+  position: sticky;
+  top: 0;
+  background-color: #f0f0f0;
+  padding: 10px;
+  z-index: 1;
+  border-bottom: 2px solid green;
 }
