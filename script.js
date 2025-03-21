@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ✅ Move form submission logic separately
     const financeForm = document.getElementById("finance-form");
 
     if (financeForm) {
@@ -37,9 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
                 let amount = entry.querySelector("input[name='sum[]']").value;
                 let reasonSelect = entry.querySelector("select[name='income-reason[]']");
-                let reason = reasonSelect.value === "other"
-                    ? entry.querySelector("input[name='custom-income-reason[]']").value
-                    : reasonSelect.value;
+                let reason = reasonSelect.value; // ✅ Always store as selected value, no custom text input
 
                 if (amount && reason) {
                     incomeEntries.push({ source: reason, amount: parseFloat(amount) });
@@ -50,9 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("#outcome-entries .outcome-entry").forEach(entry => {
                 let amount = entry.querySelector("input[name='sum[]']").value;
                 let reasonSelect = entry.querySelector("select[name='outcome-reason[]']");
-                let reason = reasonSelect.value === "other"
-                    ? entry.querySelector("input[name='custom-outcome-reason[]']").value
-                    : reasonSelect.value;
+                let reason = reasonSelect.value; // ✅ Always store as selected value, no custom text input
 
                 if (amount && reason) {
                     outcomeEntries.push({ source: reason, amount: parseFloat(amount) });
@@ -106,12 +101,11 @@ function addIncomeEntry() {
                 <input type="number" name="sum[]" required style="width: 100px;" />
                 <br />
                 <label>Причина за доход:</label>
-                <select name="income-reason[]" required onchange="toggleCustomReason(this)">
+                <select name="income-reason[]" required>
                     <option value="job">Работа</option>
                     <option value="other">Друго</option>
                 </select>
                 <br />
-                <input type="text" name="custom-income-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none; width: 120px;" />
             </div>
             <button type="button" class="remove-entry" onclick="removeEntry(this)" 
                 style="padding: 2px 5px; background: red; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">X</button>
@@ -131,13 +125,12 @@ function addOutcomeEntry() {
                 <input type="number" name="sum[]" required style="width: 100px;" />
                 <br />
                 <label>Причина за разход:</label>
-                <select name="outcome-reason[]" required onchange="toggleCustomReason(this)">
+                <select name="outcome-reason[]" required>
                     <option value="bills">Сметки</option>
                     <option value="entertainment">Развлечения</option>
                     <option value="other">Друго</option>
                 </select>
                 <br />
-                <input type="text" name="custom-outcome-reason[]" class="custom-reason" placeholder="Въведете причина" style="display:none; width: 120px;" />
             </div>
             <button type="button" class="remove-entry" onclick="removeEntry(this)" 
                 style="padding: 2px 5px; background: red; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 10px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">X</button>
@@ -149,10 +142,4 @@ function addOutcomeEntry() {
 // ✅ Function to remove an added entry
 function removeEntry(button) {
     button.closest(".income-entry, .outcome-entry").remove();
-}
-
-// ✅ Show custom reason input when "Other" is selected
-function toggleCustomReason(selectElement) {
-    let customInput = selectElement.parentElement.querySelector(".custom-reason");
-    customInput.style.display = selectElement.value === "other" ? "block" : "none";
 }

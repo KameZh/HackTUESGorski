@@ -1,8 +1,8 @@
-let incomes = [];
-let outcomes = [];
+let incomes = {}; // Store incomes as { source: amount }
+let outcomes = {}; // Store outcomes as { source: amount }
 
 function initRoutes(app) {
-    //  Add income route
+    // ✅ Add income (update if source exists)
     app.post("/finance/add-income", (req, res) => {
         const { entries } = req.body;
         if (!Array.isArray(entries) || entries.length === 0) {
@@ -11,14 +11,19 @@ function initRoutes(app) {
 
         entries.forEach(entry => {
             if (entry.source && entry.amount > 0) {
-                incomes.push({ source: entry.source, amount: entry.amount });
+                // ✅ If the source exists, update its amount
+                if (incomes[entry.source]) {
+                    incomes[entry.source] = entry.amount;
+                } else {
+                    incomes[entry.source] = entry.amount;
+                }
             }
         });
 
-        res.json({ message: "Income added successfully", incomes });
+        res.json({ message: "Income updated successfully", incomes });
     });
 
-    //  Add outcome route
+    // ✅ Add outcome (update if source exists)
     app.post("/finance/add-outcome", (req, res) => {
         const { entries } = req.body;
         if (!Array.isArray(entries) || entries.length === 0) {
@@ -27,17 +32,22 @@ function initRoutes(app) {
 
         entries.forEach(entry => {
             if (entry.source && entry.amount > 0) {
-                outcomes.push({ source: entry.source, amount: entry.amount });
+                // ✅ If the source exists, update its amount
+                if (outcomes[entry.source]) {
+                    outcomes[entry.source] = entry.amount;
+                } else {
+                    outcomes[entry.source] = entry.amount;
+                }
             }
         });
 
-        res.json({ message: "Outcome added successfully", outcomes });
+        res.json({ message: "Outcome updated successfully", outcomes });
     });
 
-    //  Calculate savings
+    // ✅ Calculate savings
     app.get("/finance/calculate-savings", (req, res) => {
-        const totalIncome = incomes.reduce((sum, income) => sum + income.amount, 0);
-        const totalOutcome = outcomes.reduce((sum, outcome) => sum + outcome.amount, 0);
+        const totalIncome = Object.values(incomes).reduce((sum, amount) => sum + amount, 0);
+        const totalOutcome = Object.values(outcomes).reduce((sum, amount) => sum + amount, 0);
 
         if (totalIncome === 0) {
             return res.status(400).json({ error: "No income data available" });
@@ -50,13 +60,13 @@ function initRoutes(app) {
             savePercentage = 66;
             spendPercentage = 33;
         } 
-        if (outcomePercentage < 60 && outcomePercentage > 40) {
+        else if (outcomePercentage < 60 && outcomePercentage > 40) {
             savePercentage = 40;
             spendPercentage = 60;
         }
-        if(outcomePercentage < 40){
-            savePercentage = 75
-            spendPercentage = 25
+        else {
+            savePercentage = 75;
+            spendPercentage = 25;
         }
 
         const savings = ((totalIncome - totalOutcome) * savePercentage) / 100;
@@ -68,15 +78,17 @@ function initRoutes(app) {
             outcomePercentage,
             savings,
             spending,
+            incomes,  // ✅ Send incomes in response for reference
+            outcomes  // ✅ Send outcomes in response for reference
         });
     });
 
-    //  Reset values permanently
+    // ✅ Reset all stored values
     app.post("/finance/reset-values", (req, res) => {
-        incomes = [];
-        outcomes = [];
+        incomes = {};
+        outcomes = {};
         res.json({ message: "All financial data has been reset." });
     });
 }
 
-module.exports = { initRoutes }
+module.exports = { initRoutes };
