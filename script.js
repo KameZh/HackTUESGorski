@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
                 let amount = entry.querySelector("input[name='sum[]']").value;
                 let reasonSelect = entry.querySelector("select[name='income-reason[]']");
-                let reason = reasonSelect.value; // ✅ Always store as selected value, no custom text input
+                let reason = reasonSelect.value;
 
                 if (amount && reason) {
                     incomeEntries.push({ source: reason, amount: parseFloat(amount) });
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("#outcome-entries .outcome-entry").forEach(entry => {
                 let amount = entry.querySelector("input[name='sum[]']").value;
                 let reasonSelect = entry.querySelector("select[name='outcome-reason[]']");
-                let reason = reasonSelect.value; // ✅ Always store as selected value, no custom text input
+                let reason = reasonSelect.value;
 
                 if (amount && reason) {
                     outcomeEntries.push({ source: reason, amount: parseFloat(amount) });
@@ -114,7 +114,7 @@ function addIncomeEntry() {
     document.getElementById("income-entries").appendChild(incomeDiv);
 }
 
-// ✅ Function to add more outcome entries
+// ✅ Function to add more outcome entries (Food & Transport added)
 function addOutcomeEntry() {
     let outcomeDiv = document.createElement("div");
     outcomeDiv.classList.add("outcome-entry");
@@ -128,6 +128,8 @@ function addOutcomeEntry() {
                 <select name="outcome-reason[]" required>
                     <option value="bills">Сметки</option>
                     <option value="entertainment">Развлечения</option>
+                    <option value="food">Храна</option>
+                    <option value="transport">Транспорт</option>
                     <option value="other">Друго</option>
                 </select>
                 <br />
