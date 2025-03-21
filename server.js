@@ -246,6 +246,35 @@ app.post('/login.html', async (req, res) => {
     }
 });
 
+app.get('/api/finance-data', async (req, res) => {
+    try {
+        if (!req.session || !req.session.username) {
+            return res.status(401).json({ error: 'User not logged in' });
+        }
+
+        const connection = await mysql.createConnection(dbConfig);
+        
+        const [incomeRows] = await connection.execute(
+            'SELECT amount, type FROM income WHERE user_name = ?',
+            [req.session.username]
+        );
+
+        const [expenseRows] = await connection.execute(
+            'SELECT amount, type FROM expenses WHERE user_name = ?',
+            [req.session.username]
+        );
+
+        await connection.end();
+
+        res.json({
+            income: incomeRows,
+            expenses: expenseRows
+        });
+    } catch (error) {
+        console.error('Error fetching finance data:', error);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
