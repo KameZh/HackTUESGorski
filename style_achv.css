@@ -1,0 +1,213 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f4f9;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: green;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+  gap: 20px;
+}
+
+.logo span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logo span small {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.733);
+}
+
+.logo-img {
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.menu {
+  display: flex;
+  gap: 25px;
+}
+
+.menu a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.menu a img {
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+
+.menu a img:hover {
+  opacity: 0.5;
+}
+
+/* Flex Container for Main Content */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px 0;
+}
+
+.section-wrapper {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 45%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.section-wrapper:hover {
+  transform: translateY(-10px);
+}
+
+/* Chart and Diagram Styling */
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-section h3,
+.chart-section h3,
+.savings-section h3,
+.advice-section h3 {
+  color: green;
+  margin-bottom: 20px;
+}
+
+#monthlySavings {
+  font-size: 2rem;
+  color: #04aa6d;
+}
+
+#adviceText {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+#potentialSavings {
+  font-size: 1.5rem;
+  color: #ff9800;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .section-wrapper {
+    width: 90%;
+  }
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.footer-content a {
+  color: green;
+  text-decoration: none;
+}
+
+.footer-menu a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+}
+
+.footer-menu a:hover {
+  color: gray;
+}
+
+/* Additional Styles from Uploaded File */
+
+.banner {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  margin-top: 30px;
+  border-bottom: 5px solid green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("./img/fa.png") no-repeat center center/cover;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  transform: translateY(0);
+  transition: transform 0.3s ease-out;
+}
+
+body.scrolled .banner img {
+  transform: translateY(-10px);
+}
+
+.scrolled header {
+  background-color: #333;
+  color: #fff;
+}
+
+.scrolled .menu a img {
+  background-color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.scrolled .menu a {
+  color: #fff;
+}
+
+.fixed-header {
+  position: sticky;
+  top: 0;
+  background-color: #f0f0f0;
+  padding: 10px;
+  z-index: 1;
+  border-bottom: 2px solid green;
+}
