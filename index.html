@@ -122,7 +122,6 @@
       </nav>
     </footer>
     <script>
-      // Проверка дали потребителят вече е логнат
       fetch('/api/session')
           .then(response => response.json())
           .then(data => {

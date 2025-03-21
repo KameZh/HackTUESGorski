@@ -190,8 +190,8 @@ main {
 .list {
   list-style-type: disc;
   padding-left: 20px;
-  padding-top: 40px; /* Adjusted padding to center text vertically */
-  padding-bottom: 40px; /* Adjusted padding to center text vertically */
+  padding-top: 40px;
+  padding-bottom: 40px;
   align-items: center;
   font-size: 30px;
 }
@@ -214,11 +214,11 @@ main {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; /* Added to make the box flexible */
-  justify-content: flex-start; /* Align items to the start */
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  background: #f4f4f9; /* Match existing background color */
-  border: 2px solid green; /* Match existing border color */
+  background: #f4f4f9;
+  border: 2px solid green;
   transition: background-color 0.3s ease, padding 0.3s ease;
 }
 
@@ -334,7 +334,7 @@ footer {
 }
 .left-column a:hover {
   opacity: 0.6;
-  color: green; /* Re-added green color */
+  color: green;
 }
 
 form {
@@ -396,7 +396,7 @@ button:hover {
 }
 
 .reset-button {
-  background-color: rgba(255, 0, 0, 0.5); /* Base color red with mid opacity */
+  background-color: rgba(255, 0, 0, 0.5);
   color: white;
   padding: 5px 10px;
   border: none;
@@ -408,9 +408,9 @@ button:hover {
 }
 
 .reset-button:hover {
-  background-color: rgba(255, 0, 0, 1); /* Increase opacity */
-  transform: scale(1.05); /* Increase scale */
-  opacity: 1; /* Ensure full opacity */
+  background-color: rgba(255, 0, 0, 1);
+  transform: scale(1.05);
+  opacity: 1;
 }
 
 .reset-button:hover {
@@ -419,7 +419,7 @@ button:hover {
 
 .change {
   background-color: green;
-  opacity: 0.5; /* Base color red with mid opacity */
+  opacity: 0.5;
   color: white;
   padding: 5px 10px;
   border: none;
@@ -431,9 +431,9 @@ button:hover {
 }
 
 .change:hover {
-  background-color: green; /* Increase opacity */
-  transform: scale(1.05); /* Increase scale */
-  opacity: 1; /* Ensure full opacity */
+  background-color: green;
+  transform: scale(1.05);
+  opacity: 1;
 }
 
 .change:hover {

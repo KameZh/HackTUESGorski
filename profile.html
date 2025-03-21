@@ -97,18 +97,18 @@
          window.addEventListener("scroll", function () {
         document.body.classList.toggle("scrolled", window.scrollY > 50);
       });
-      // Check if user is logged in
+    
       window.onload = async function () {
         try {
           const response = await fetch("/api/profile");
           if (response.status === 401) {
-            // Not logged in, redirect to login
+            
             window.location.href = "/login.html";
             return;
           }
           const userData = await response.json();
 
-          // Update profile information
+         
           document.getElementById("username").textContent = userData.username;
           document.getElementById("memberSince").textContent = new Date(
             userData.created_at
@@ -116,7 +116,7 @@
           document.getElementById("profileAvatar").textContent =
             userData.username[0].toUpperCase();
 
-          // Update statistics if available
+         
           if (userData.statistics) {
             document.getElementById("achievementsCount").textContent =
               userData.statistics.achievements || 0;
@@ -131,7 +131,7 @@
         }
       };
 
-      // Logout functionality
+      
       document.getElementById("logoutBtn").onclick = async function (e) {
         e.preventDefault();
         try {
@@ -147,7 +147,7 @@
         }
       };
 
-      // Change password functionality
+      
       document.getElementById("changePasswordBtn").onclick = async function () {
         const newPassword = prompt("Enter new password:");
         if (!newPassword) return;
@@ -170,7 +170,7 @@
         }
       };
 
-      // Delete account functionality
+      
       document.getElementById("deleteAccountBtn").onclick = async function () {
         if (
           !confirm(
