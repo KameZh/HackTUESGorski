@@ -103,6 +103,7 @@
         const formData = new FormData(this);
         const password = formData.get("password");
         const confirmPassword = formData.get("confirmPassword");
+
         if (password !== confirmPassword) {
           const notification = document.getElementById("notification");
           notification.innerText = "Passwords do not match";
@@ -136,6 +137,7 @@
         }
         notification.style.display = "block";
       };
+
       document
         .getElementById("confirmPassword")
         .addEventListener("input", function () {
@@ -155,6 +157,7 @@
             notification.style.display = "block";
           }
         });
+
       document
         .getElementById("password")
         .addEventListener("input", function () {

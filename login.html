@@ -84,17 +84,15 @@
       </nav>
     </footer>
     <script>
-      // Проверка дали потребителят вече е логнат
       fetch("/api/session")
         .then((response) => response.json())
         .then((data) => {
           if (data.userId) {
-            window.location.href = "/profile.html"; // Пренасочване, ако е логнат
+            window.location.href = "/profile.html";
           }
         })
         .catch((error) => console.error("Session check error:", error));
 
-      // Обработване на формата за вход
       document.getElementById("loginForm").onsubmit = async function (event) {
         event.preventDefault();
 
@@ -122,7 +120,7 @@
             notification.className = "notification success";
 
             setTimeout(() => {
-              window.location.href = responseData.redirect; // Пренасочване към профила
+              window.location.href = responseData.redirect;
             }, 1500);
           } else {
             notification.innerText =

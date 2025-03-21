@@ -37,10 +37,16 @@
       <div class="content">
         <div class="row">
           <div class="left-column">
-            <h1>Калкулатор за финанси</h1>
+            <h1>Калкулатор за финанси<br><br></h1>
             <p>Въведете сума и причини</p>
             <hr />
             <br />
+            <div id="user-section">
+              <label for="username">Потребителско име:</label>
+              <input type="text" id="username" placeholder="Въведете вашето име" required>
+              <button class="button">Запази</button>
+          </div>
+          <br>
             <form id="finance-form" action="/calc" method="post">
                 <h3>Доходи</h3>
                 <br>
@@ -62,6 +68,7 @@
               <button type="button" class="add" onclick="addIncomeEntry()">Добави още доход</button>
               <br>
               <hr>
+              <br>
               <h3>Разходи</h3>
               <br>
               <div id="outcome-entries">
@@ -73,6 +80,8 @@
                     <select name="outcome-reason[]" required onchange="toggleCustomReason(this)">
                         <option value="bills">Сметки</option>
                         <option value="entertainment">Развлечения</option>
+                        <option value="food">Храна</option>
+                        <option value="transport">Транспорт</option>
                         <option value="other">Друго</option>
                     </select>
                     <br />
@@ -97,7 +106,7 @@
             <p id="spending-result"> Препорачителни пари за свободно ползване: </p>
             <br>
             <br>
-            <button id="reset-button" style="padding: 5px 10px; background: gray; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; margin-top: 10px;">Нулирай</button>
+            <button class="reset-button">Нулирай</button>
         </div>
         </div>
       </div>

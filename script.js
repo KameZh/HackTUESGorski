@@ -1,12 +1,29 @@
+let currentUsername = "";
+
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("✅ Script loaded successfully."); // Debugging log
+    console.log("Script loaded successfully.");
+
+    const usernameInput = document.getElementById("username");
+    const saveUsernameButton = document.getElementById("save-username");
+
+    if (saveUsernameButton) {
+        saveUsernameButton.addEventListener("click", function () {
+            const enteredUsername = usernameInput.value.trim();
+            if (enteredUsername !== "") {
+                currentUsernam= enteredUsername;
+                console.log(`Username saved: ${currentUsername}`);
+                alert(`Потребителското име "${currentUsername}" е запазено.`);
+            } else {
+                alert("Моля, въведете валидно потребителско име.");
+            }
+        });
+    }
 
     const resetButton = document.getElementById("reset-button");
     if (resetButton) {
         resetButton.addEventListener("click", async function () {
-            console.log("🔄 Reset button clicked."); // Debugging log
+            console.log("Reset button clicked.");
 
-            // Reset displayed results
             document.getElementById("savings-result").textContent = "Препоръчителни спестявания: ";
             document.getElementById("spending-result").textContent = "Препорачителни пари за свободно ползване: ";
 
@@ -17,9 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                console.log("✅ Financial data reset successfully.");
+                console.log("Financial data reset successfully.");
             } catch (error) {
-                console.error("❌ Error resetting financial data:", error);
+                console.error("Error resetting financial data:", error);
             }
         });
     }
@@ -30,7 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
         financeForm.addEventListener("submit", async function (event) {
             event.preventDefault();
 
-            console.log("✅ Form submitted."); // Debugging log
+            if (currentUsername === "") {
+                alert("Моля, въведете потребителско име преди да изпратите формуляра.");
+                return;
+            }
+
+            console.log(`Form submitted by ${currentUsername}.`);
 
             let incomeEntries = [];
             document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
@@ -58,13 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 await fetch("/finance/add-income", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ entries: incomeEntries })
+                    body: JSON.stringify({ username: currentUsername, entries: incomeEntries })
                 });
 
                 await fetch("/finance/add-outcome", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ entries: outcomeEntries })
+                    body: JSON.stringify({ username: currentUsername, entries: outcomeEntries })
                 });
 
                 const response = await fetch("/finance/calculate-savings", {
@@ -73,24 +95,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
                 if (!response.ok) {
-                    console.error("❌ Error fetching savings:", await response.text());
+                    console.error("Error fetching savings:", await response.text());
                     throw new Error("Server error");
                 }
 
                 const data = await response.json();
 
-                document.getElementById("savings-result").textContent = `Препоръчителни спестявания: ${data.savings.toFixed(2)} лв`;
-                document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване: ${data.spending.toFixed(2)} лв`;
+                document.getElementById("savings-result").textContent = `Препоръчителни спестявания за ${currentUsername}: ${data.savings.toFixed(2)} лв`;
+                document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване за ${currentUsername}: ${data.spending.toFixed(2)} лв`;
 
             } catch (error) {
-                console.error("❌ Fetch Error:", error);
+                console.error("Fetch Error:", error);
                 alert("Грешка при изчисленията! Проверете сървъра.");
             }
         });
     }
 });
 
-// ✅ Function to add more income entries
 function addIncomeEntry() {
     let incomeDiv = document.createElement("div");
     incomeDiv.classList.add("income-entry");
@@ -114,7 +135,6 @@ function addIncomeEntry() {
     document.getElementById("income-entries").appendChild(incomeDiv);
 }
 
-// ✅ Function to add more outcome entries (Food & Transport added)
 function addOutcomeEntry() {
     let outcomeDiv = document.createElement("div");
     outcomeDiv.classList.add("outcome-entry");
@@ -141,7 +161,6 @@ function addOutcomeEntry() {
     document.getElementById("outcome-entries").appendChild(outcomeDiv);
 }
 
-// ✅ Function to remove an added entry
 function removeEntry(button) {
     button.closest(".income-entry, .outcome-entry").remove();
 }
