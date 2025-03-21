@@ -1,151 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gorski Sign Up</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
     <style>
-        .notification {
-            display: none;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid transparent;
-            border-radius: 4px;
-        }
-        .notification.success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        .notification.error {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
+      .notification {
+        display: none;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+      .notification.success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+      }
+      .notification.error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="logo">
-            <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-            <span>Gorski <small>Sign Up</small></span>
-        </div>
-        <nav class="menu">
-            <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-            <a href="calc.html"><img src="./img/calc.png" alt="Calc"></a>
-            <a href="videos.html"><img src="./img/trophy.png" alt="Videos" /></a>
-            <a href="contact.html"><img src="./img/contacts.png" alt="Contacts" /></a>
-            <a href="login.html"><img src="./img/login.png" alt="Login" /></a>
-        </nav>
+      <div class="logo">
+        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
+        <span>Gorski <small>Sign Up</small></span>
+      </div>
+      <nav class="menu">
+        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
+        <a href="achv.html"
+          ><img src="./img/trophy.png" alt="Achievements"
+        /></a>
+        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
+        <a href="contact.html"
+          ><img src="./img/contacts.png" alt="Contacts"
+        /></a>
+        <a id="loginLink" href="/login.html"
+          ><img src="./img/login.png" alt="Login"
+        /></a>
+      </nav>
     </header>
 
     <div class="banner">
-        <img src="./img/forest_back.jpg" alt="Forest Background" />
+      <img src="./img/forest_back.jpg" alt="Forest Background" />
     </div>
     <form id="signupForm" action="/signup.html" method="post">
-        <div class="container">
-            <h1>Sign Up</h1>
-            <p>Fill out this form to register in our platform</p>
-            <hr />
-            <div id="notification" class="notification"></div>
-            <br />
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-            <br />
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-            <br />
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required />
-            <br />
-            <hr>
-            <p>Registration means you agree with our <br><a href="t&c.html">Terms and Conditions</a></p>
-            <button type="submit">Register</button>
-            <p>Go to <a href='login.html'>login</a></p>
-        </div>
+      <div class="container">
+        <h1>Sign Up</h1>
+        <p>Fill out this form to register in our platform</p>
+        <hr />
+        <div id="notification" class="notification"></div>
+        <br />
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+        <br />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+        <br />
+        <label for="confirmPassword">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          required
+        />
+        <br />
+        <hr />
+        <p>
+          Registration means you agree with our <br /><a href="t&c.html"
+            >Terms and Conditions</a
+          >
+        </p>
+        <button type="submit">Register</button>
+        <p>Go to <a href="login.html">login</a></p>
+      </div>
     </form>
     <footer>
-        <div class="footer-content">
-            За повече информация изпратете e-mail на
-            <a href="https://mail.google.com/mail/u/0/#inbox?compose=new">gorskite4@gmail.com</a>
-        </div>
-        <nav class="footer-menu">
-            <a href="index.html">Home</a>
-            <a href="calc.html">Calculator</a>
-            <a href="achv.html">Achievements</a>
-            <a href="contact.html">Contacts</a>
-        </nav>
+      <div class="footer-content">
+        За повече информация изпратете e-mail на
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
+          >gorskite4@gmail.com</a
+        >
+      </div>
+      <nav class="footer-menu">
+        <a href="index.html">Home</a>
+        <a href="calc.html">Calculator</a>
+        <a href="achv.html">Achievements</a>
+        <a href="contact.html">Contacts</a>
+      </nav>
     </footer>
     <script>
-        document.getElementById('signupForm').onsubmit = async function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const password = formData.get('password');
-            const confirmPassword = formData.get('confirmPassword');
-            
-            // Check if passwords match
-            if (password !== confirmPassword) {
-                const notification = document.getElementById('notification');
-                notification.innerText = 'Passwords do not match';
-                notification.className = 'notification error';
-                notification.style.display = 'block';
-                return;
-            }
-            
-            const data = {
-                username: formData.get('username'),
-                password: password
-            };
-            
-            const response = await fetch(this.action, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            const text = await response.text();
-            const notification = document.getElementById('notification');
-            notification.innerText = text;
-            if (response.status === 200) {
-                notification.className = 'notification success';
-                setTimeout(() => {
-                    window.location.href = '/login.html';
-                }, 1500);
-            } else {
-                notification.className = 'notification error';
-            }
-            notification.style.display = 'block';
+      document.getElementById("signupForm").onsubmit = async function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const password = formData.get("password");
+        const confirmPassword = formData.get("confirmPassword");
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+          const notification = document.getElementById("notification");
+          notification.innerText = "Passwords do not match";
+          notification.className = "notification error";
+          notification.style.display = "block";
+          return;
+        }
+
+        const data = {
+          username: formData.get("username"),
+          password: password,
         };
 
-        // Add real-time password matching validation
-        document.getElementById('confirmPassword').addEventListener('input', function() {
-            const password = document.getElementById('password').value;
-            const confirmPassword = this.value;
-            const notification = document.getElementById('notification');
-            
-            if (confirmPassword === '') {
-                notification.style.display = 'none';
-            } else if (password !== confirmPassword) {
-                notification.innerText = 'Passwords do not match';
-                notification.className = 'notification error';
-                notification.style.display = 'block';
-            } else {
-                notification.innerText = 'Passwords match';
-                notification.className = 'notification success';
-                notification.style.display = 'block';
-            }
+        const response = await fetch(this.action, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const text = await response.text();
+        const notification = document.getElementById("notification");
+        notification.innerText = text;
+        if (response.status === 200) {
+          notification.className = "notification success";
+          setTimeout(() => {
+            window.location.href = "/login.html";
+          }, 1500);
+        } else {
+          notification.className = "notification error";
+        }
+        notification.style.display = "block";
+      };
+
+      // Add real-time password matching validation
+      document
+        .getElementById("confirmPassword")
+        .addEventListener("input", function () {
+          const password = document.getElementById("password").value;
+          const confirmPassword = this.value;
+          const notification = document.getElementById("notification");
+
+          if (confirmPassword === "") {
+            notification.style.display = "none";
+          } else if (password !== confirmPassword) {
+            notification.innerText = "Passwords do not match";
+            notification.className = "notification error";
+            notification.style.display = "block";
+          } else {
+            notification.innerText = "Passwords match";
+            notification.className = "notification success";
+            notification.style.display = "block";
+          }
         });
 
-        // Update validation when password changes
-        document.getElementById('password').addEventListener('input', function() {
-            const confirmPassword = document.getElementById('confirmPassword');
-            if (confirmPassword.value !== '') {
-                confirmPassword.dispatchEvent(new Event('input'));
-            }
+      // Update validation when password changes
+      document
+        .getElementById("password")
+        .addEventListener("input", function () {
+          const confirmPassword = document.getElementById("confirmPassword");
+          if (confirmPassword.value !== "") {
+            confirmPassword.dispatchEvent(new Event("input"));
+          }
         });
     </script>
-</body>
+  </body>
 </html>
