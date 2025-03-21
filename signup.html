@@ -103,8 +103,6 @@
         const formData = new FormData(this);
         const password = formData.get("password");
         const confirmPassword = formData.get("confirmPassword");
-
-        // Check if passwords match
         if (password !== confirmPassword) {
           const notification = document.getElementById("notification");
           notification.innerText = "Passwords do not match";
@@ -138,8 +136,6 @@
         }
         notification.style.display = "block";
       };
-
-      // Add real-time password matching validation
       document
         .getElementById("confirmPassword")
         .addEventListener("input", function () {
@@ -159,8 +155,6 @@
             notification.style.display = "block";
           }
         });
-
-      // Update validation when password changes
       document
         .getElementById("password")
         .addEventListener("input", function () {

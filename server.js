@@ -4,57 +4,74 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2/promise');
 const session = require('express-session');
-const financeTracker = require('./financeTracker.js');
 const MySQLStore = require('express-mysql-session')(session);
-const app = express();
-const PORT = 7700;
+const financeTracker = require('./financeTracker');
+const {
+    GoogleGenerativeAI,
+    HarmCategory,
+    HarmBlockThreshold,
+} = require("@google/generative-ai");
+require('dotenv').config();
+
+
+
 const sessionStore = new MySQLStore({
     host: '127.0.0.1',
     user: 'root',
-  password: 'Kirikuk123$',
+    password: 'Kirikuk123$',
     database: 'db',
     clearExpired: true,
-    checkExpirationInterval: 900000, // Проверка на изтекли сесии (15 мин)
-    expiration: 86400000 // 1 ден живот на сесиятa
-});
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-require('dotenv').config(); // Load environment variables
-
-app.use(express.static('public')); // Serve static files (HTML, CSS)
-app.use(express.json()); // Parse JSON requests
-
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY); // Use environment variable to store the api key.
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-app.post('/ask', async (req, res) => {
-    try {
-        const question = req.body.question;
-        const result = await model.generateContent(question);
-        const response = await result.response;
-        const text = response.text();
-        res.json({ answer: text });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Something went wrong.' });
-    }
+    checkExpirationInterval: 900000, 
+    expiration: 86400000 ,
 });
 
-// Add support for different types of form data
+const app = express();
+const PORT = 7700;
+
+app.use(express.static(__dirname)); 
 app.use(express.json());
-app.use(express.raw());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname)));
-app.use("/finance", financeTracker);
-// Add session support
+app.use(express.raw());
 app.use(session({
     secret: 'gorski-secret-key',
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-    cookie: { secure: false, maxAge: 86400000 } // 1 ден
+    cookie: { secure: false, maxAge: 86400000 } 
 }));
+app.use('/finance', financeTracker);
 
-// Настройки за връзка с базата данни
+const apiKey = process.env.GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+    model: "gemini-2.0-pro-exp-02-05",
+});
+
+const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 64,
+    maxOutputTokens: 8192,
+    responseMimeType: "text/plain",
+};
+
+async function run() {
+    const chatSession = model.startChat({
+      generationConfig,
+      history: [
+      ],
+    });
+    const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
+    console.log(result.response.text());
+}
+  
+
+app.post('/ask', async (req, res) => {
+    
+    run();
+});
+
 const dbConfig = {
     host: '127.0.0.1',
     user: 'root',
@@ -62,7 +79,6 @@ const dbConfig = {
     database: 'db'
 };
 
-// Middleware to check if user is authenticated
 const requireAuth = (req, res, next) => {
     if (!req.session.userId) {
         return res.status(401).send('Not authenticated');
@@ -70,49 +86,84 @@ const requireAuth = (req, res, next) => {
     next();
 };
 
-// Update database schema
-async function updateSchema() {
+  
+  // Update database schema
+  async function updateSchema() {
     try {
-        const connection = await mysql.createConnection(dbConfig);
-        
-        // Check if columns exist first
-        const [columns] = await connection.execute('SHOW COLUMNS FROM users');
-        const existingColumns = columns.map(col => col.Field);
-        
-        // Add columns that don't exist
-        const columnsToAdd = [];
-        if (!existingColumns.includes('created_at')) {
-            columnsToAdd.push('ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
-        }
-        if (!existingColumns.includes('achievements')) {
-            columnsToAdd.push('ADD COLUMN achievements INT DEFAULT 0');
-        }
-        if (!existingColumns.includes('calculations')) {
-            columnsToAdd.push('ADD COLUMN calculations INT DEFAULT 0');
-        }
-        if (!existingColumns.includes('last_active')) {
-            columnsToAdd.push('ADD COLUMN last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
-        }
-        
-        // Execute ALTER TABLE if there are columns to add
-        if (columnsToAdd.length > 0) {
-            const alterQuery = `ALTER TABLE users ${columnsToAdd.join(', ')}`;
-            await connection.execute(alterQuery);
-            console.log('Database schema updated successfully');
-        } else {
-            console.log('Database schema is up to date');
-        }
-        
-        await connection.end();
+      const connection = await mysql.createConnection(dbConfig);
+      const [columns] = await connection.execute('SHOW COLUMNS FROM users');
+      const existingColumns = columns.map(col => col.Field);
+  
+      const columnsToAdd = [];
+      if (!existingColumns.includes('created_at')) {
+        columnsToAdd.push('ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
+      }
+      if (!existingColumns.includes('achievements')) {
+        columnsToAdd.push('ADD COLUMN achievements INT DEFAULT 0');
+      }
+      if (!existingColumns.includes('calculations')) {
+        columnsToAdd.push('ADD COLUMN calculations INT DEFAULT 0');
+      }
+      if (!existingColumns.includes('last_active')) {
+        columnsToAdd.push('ADD COLUMN last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
+      }
+  
+      if (columnsToAdd.length > 0) {
+        const alterQuery = `ALTER TABLE users ${columnsToAdd.join(', ')}`;
+        await connection.execute(alterQuery);
+        console.log('Database schema updated successfully');
+      } else {
+        console.log('Database schema is up to date');
+      }
+      await connection.end();
     } catch (error) {
-        console.error('Error updating schema:', error);
+      console.error('Error updating schema:', error);
     }
-}
+  }
+  updateSchema();
 
-// Call updateSchema when server starts
+  app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'achv.html')));
+
+  app.get('/expenses', async (req, res) => {
+    const connection = await mysql.createConnection(dbConfig);
+    try {
+      const [results] = await connection.execute('SELECT category, amount FROM expenses');
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    } finally {
+      await connection.end();
+    }
+  });
+
+  app.get('/savings', async (req, res) => {
+    const connection = await mysql.createConnection(dbConfig);
+    try {
+      const [results] = await connection.execute('SELECT month, saved_amount FROM savings');
+      res.json(results);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    } finally {
+      await connection.end();
+    }
+  });
+  
+  app.get('/advice', async (req, res) => {
+    const connection = await mysql.createConnection(dbConfig);
+    try {
+      const [results] = await connection.execute('SELECT tip, potential_savings FROM advice ORDER BY RAND() LIMIT 1');
+      res.json(results[0]);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    } finally {
+      await connection.end();
+    }
+  });
+
+
 updateSchema();
 
-// Profile API endpoint
+
 app.get('/api/profile', requireAuth, async (req, res) => {
     try {
         const connection = await mysql.createConnection(dbConfig);
@@ -148,12 +199,11 @@ app.get('/api/profile', requireAuth, async (req, res) => {
 
 app.use((req, res, next) => {
     if (req.session) {
-        req.session.touch(); // Поддържа сесията активна
+        req.session.touch();
     }
     next();
 });
 
-// Change password endpoint
 app.post('/api/change-password', requireAuth, async (req, res) => {
     const { newPassword } = req.body;
     if (!newPassword) {
@@ -189,7 +239,6 @@ app.post('/api/delete-account', requireAuth, async (req, res) => {
     }
 });
 
-
 app.get('/api/session', (req, res) => {
     console.log("Session data:", req.session);
     res.json(req.session);
@@ -198,7 +247,7 @@ app.get('/api/session', (req, res) => {
 // Logout endpoint
 app.post('/api/logout', requireAuth, (req, res) => {
     req.session.destroy();
-    res.status(200).send('Logged ouаt successfully');
+    res.status(200).send('Logged out successfully');
 });
 
 // Маршрут за регистрация
@@ -259,10 +308,6 @@ app.post('/login.html', async (req, res) => {
         res.status(500).json({ error: 'Database error' });
     }
 });
-
-
-
-financeTracker.initRoutes(app);
 
 // Стартиране на сървъра
 app.listen(PORT, () => {

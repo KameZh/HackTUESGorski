@@ -126,13 +126,12 @@
     </footer>
 
     <script>
-      // Проверка дали потребителят вече е логнат
       fetch('/api/session')
           .then(response => response.json())
           .then(data => {
               if (data.userId) {
-                  document.getElementById('loginLink').href = "/profile.html"; // Ако е логнат, води към профила
-                  document.getElementById('loginLink').innerHTML = '<img src="./img/profile.png" alt="Profile" />'; // Смяна на иконката
+                  document.getElementById('loginLink').href = "/profile.html";
+                  document.getElementById('loginLink').innerHTML = '<img src="./img/profile.png" alt="Profile" />';
               }
           })
           .catch(error => console.error('Session check error:', error));
