@@ -1,5 +1,4 @@
-
-![Logo](https://i.postimg.cc/WpX89NKC/gorsko-logo.png)
+![Image Description](https://i.postimg.cc/WpX89NKC/gorsko-logo.png)
 
 
 # Gorski Finance Project
