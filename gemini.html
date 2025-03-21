@@ -1,63 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Gorski Terms</title>
-        <link rel="stylesheet" href="style.css" />
-        <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
-        <script>
-          window.addEventListener("scroll", function () {
-            document.body.classList.toggle("scrolled", window.scrollY > 50);
-          });
-        </script>
-      </head>
-<body>
-    <header>
-        <div class="logo">
-          <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-          <span>Gorski<br /><small>Finance Accountant</small></span>
-        </div>
-        <nav class="menu">
-          <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-          <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
-          <a href="achv.html"><img src="./img/trophy.png" alt="Videos" /></a>
-          <a href="contact.html"><img src="./img/contacts.png" alt="Contacts" /></a>
-          <a id="loginLink" href="/login.html"><img src="./img/login.png" alt="Login" /></a>
-        </nav>
-      </header>
-  
-      <div class="banner">
-        <img src="./img/fa.png" alt="Finance Calculating" />
-      </div>
-    <main>
-    <h1>Financial Help Chat</h1>
-    <div id="chat"></div>
-    <input type="text" id="question" placeholder="Ask a financial question">
-    <button id="send">Send</button>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gorski AI Chatbot</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
     <script>
-        const chat = document.getElementById('chat');
-        const questionInput = document.getElementById('question');
-        const sendButton = document.getElementById('send');
-
-        sendButton.addEventListener('click', async () => {
-            const question = questionInput.value;
-            chat.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
-            questionInput.value = '';
-
-            const response = await fetch('/ask', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ question: question })
-            });
-
-            const data = await response.json();
-            chat.innerHTML += `<p><strong>Gemini:</strong> ${data.answer}</p>`;
-            chat.scrollTop = chat.scrollHeight; // Scroll to bottom
-        });
+      window.addEventListener("scroll", function () {
+        document.body.classList.toggle("scrolled", window.scrollY > 50);
+      });
     </script>
-    <p>Disclaimer: This information is for educational purposes only and should not be considered financial advice.</p>
-</main>
-</body>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
+        <span>Gorski<br /><small>AI Chatbot</small></span>
+      </div>
+      <nav class="menu">
+        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
+        <a href="achv.html"
+          ><img src="./img/trophy.png" alt="Achievements"
+        /></a>
+        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
+        <a href="contact.html"
+          ><img src="./img/contacts.png" alt="Contacts"
+        /></a>
+        <a id="loginLink" href="/login.html"
+          ><img src="./img/login.png" alt="Login"
+        /></a>
+      </nav>
+    </header>
+
+    <div class="banner">
+      <img src="./img/fa.png" alt="Finance Calculating" />
+    </div>
+    <main>
+      <h1>Financial Help Chat</h1>
+      <div id="chat"></div>
+      <input type="text" id="question" placeholder="Ask a financial question" />
+      <button id="send">Send</button>
+
+      <script>
+        const chat = document.getElementById("chat");
+        const questionInput = document.getElementById("question");
+        const sendButton = document.getElementById("send");
+
+        sendButton.addEventListener("click", async () => {
+          const question = questionInput.value;
+          chat.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
+          questionInput.value = "";
+
+          const response = await fetch("/ask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: question }),
+          });
+
+          const data = await response.json();
+          chat.innerHTML += `<p><strong>Gemini:</strong> ${data.answer}</p>`;
+          chat.scrollTop = chat.scrollHeight; // Scroll to bottom
+        });
+      </script>
+      <p>
+        Disclaimer: This information is for educational purposes only and should
+        not be considered financial advice.
+      </p>
+    </main>
+    <footer>
+      <div class="footer-content">
+        За повече информация изпратете e-mail на
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
+          >gorskite4@gmail.com</a
+        >
+      </div>
+      <nav class="footer-menu">
+        <a href="index.html">Home</a>
+        <a href="calc.html">Calculator</a>
+        <a href="achv.html">Achievements</a>
+        <a href="gemini.html">AI Chat</a>
+        <a href="contact.html">Contacts</a>
+      </nav>
+    </footer>
+  </body>
 </html>

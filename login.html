@@ -1,130 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gorski Login</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
     <style>
-        .notification {
-            display: none;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid transparent;
-            border-radius: 4px;
-        }
-        .notification.success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        .notification.error {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
+      .notification {
+        display: none;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+      .notification.success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+      }
+      .notification.error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="logo">
-            <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-            <span>Gorski <small>Login</small></span>
-        </div>
-        <nav class="menu">
-            <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-            <a href="calc.html"><img src="./img/calc.png" alt="Calc"></a>
-            <a href="achv.html"><img src="./img/trophy.png" alt="Videos" /></a>
-            <a href="contact.html"><img src="./img/contacts.png" alt="Contacts" /></a>
-            <a href="login.html"><img src="./img/login.png" alt="Login" /></a>
-        </nav>
+      <div class="logo">
+        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
+        <span>Gorski <small>Login</small></span>
+      </div>
+      <nav class="menu">
+        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
+        <a href="achv.html"
+          ><img src="./img/trophy.png" alt="Achievements"
+        /></a>
+        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
+        <a href="contact.html"
+          ><img src="./img/contacts.png" alt="Contacts"
+        /></a>
+        <a id="loginLink" href="/login.html"
+          ><img src="./img/login.png" alt="Login"
+        /></a>
+      </nav>
     </header>
 
     <div class="banner">
-        <img src="./img/forest_back.jpg" alt="Forest Background" />
+      <img src="./img/forest_back.jpg" alt="Forest Background" />
     </div>
     <form id="loginForm" action="/login.html" method="post">
-        <div class="container">
-            <h1>Login</h1>
-            <p>Fill out to login</p>
-            <hr />
-            <div id="notification" class="notification"></div>
-            <br />
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-            <br />
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-            <br />
-            <button type="submit">Login</button>
-            <p>Don't have an account? <a href="signup.html">Register here</a></p>
-        </div>
+      <div class="container">
+        <h1>Login</h1>
+        <p>Fill out to login</p>
+        <hr />
+        <div id="notification" class="notification"></div>
+        <br />
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+        <br />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+        <br />
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="signup.html">Register here</a></p>
+      </div>
     </form>
     <footer>
-        <div class="footer-content">
-            За повече информация изпратете e-mail на
-            <a href="https://mail.google.com/mail/u/0/#inbox?compose=new">gorskite4@gmail.com</a>
-        </div>
-        <nav class="footer-menu">
-            <a href="index.html">Home</a>
-            <a href="calc.html">Calculator</a>
-            <a href="achv.html">Achievements</a>
-            <a href="contact.html">Contacts</a>
-        </nav>
+      <div class="footer-content">
+        За повече информация изпратете e-mail на
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
+          >gorskite4@gmail.com</a
+        >
+      </div>
+      <nav class="footer-menu">
+        <a href="index.html">Home</a>
+        <a href="calc.html">Calculator</a>
+        <a href="achv.html">Achievements</a>
+        <a href="gemini.html">AI Chat</a>
+        <a href="contact.html">Contacts</a>
+      </nav>
     </footer>
     <script>
       // Проверка дали потребителят вече е логнат
-      fetch('/api/session')
-          .then(response => response.json())
-          .then(data => {
-              if (data.userId) {
-                  window.location.href = '/profile.html'; // Пренасочване, ако е логнат
-              }
-          })
-          .catch(error => console.error('Session check error:', error));
-  
-      // Обработване на формата за вход
-      document.getElementById('loginForm').onsubmit = async function(event) {
-          event.preventDefault();
-          
-          const formData = new FormData(this);
-          const data = {
-              username: formData.get('username'),
-              password: formData.get('password')
-          };
-  
-          const response = await fetch(this.action, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-          });
-  
-          const notification = document.getElementById('notification');
-  
-          try {
-              const responseData = await response.json();
-  
-              if (response.ok && responseData.success) {
-                  notification.innerText = "Успешен вход! Пренасочване...";
-                  notification.className = 'notification success';
-  
-                  setTimeout(() => {
-                      window.location.href = responseData.redirect; // Пренасочване към профила
-                  }, 1500);
-              } else {
-                  notification.innerText = responseData.error || "Грешка при влизане.";
-                  notification.className = 'notification error';
-              }
-          } catch (error) {
-              notification.innerText = "Грешка при обработка на отговора.";
-              notification.className = 'notification error';
+      fetch("/api/session")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.userId) {
+            window.location.href = "/profile.html"; // Пренасочване, ако е логнат
           }
-  
-          notification.style.display = 'block';
+        })
+        .catch((error) => console.error("Session check error:", error));
+
+      // Обработване на формата за вход
+      document.getElementById("loginForm").onsubmit = async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const data = {
+          username: formData.get("username"),
+          password: formData.get("password"),
+        };
+
+        const response = await fetch(this.action, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const notification = document.getElementById("notification");
+
+        try {
+          const responseData = await response.json();
+
+          if (response.ok && responseData.success) {
+            notification.innerText = "Успешен вход! Пренасочване...";
+            notification.className = "notification success";
+
+            setTimeout(() => {
+              window.location.href = responseData.redirect; // Пренасочване към профила
+            }, 1500);
+          } else {
+            notification.innerText =
+              responseData.error || "Грешка при влизане.";
+            notification.className = "notification error";
+          }
+        } catch (error) {
+          notification.innerText = "Грешка при обработка на отговора.";
+          notification.className = "notification error";
+        }
+
+        notification.style.display = "block";
       };
-  </script>
-</body>
+    </script>
+  </body>
 </html>
