@@ -1,22 +1,19 @@
 let currentUsername = "";
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     console.log("Script loaded successfully.");
-
-    const usernameInput = document.getElementById("username");
-    const saveUsernameButton = document.getElementById("save-username");
-
-    if (saveUsernameButton) {
-        saveUsernameButton.addEventListener("click", function () {
-            const enteredUsername = usernameInput.value.trim();
-            if (enteredUsername !== "") {
-                currentUsernam= enteredUsername;
-                console.log(`Username saved: ${currentUsername}`);
-                alert(`Потребителското име "${currentUsername}" е запазено.`);
-            } else {
-                alert("Моля, въведете валидно потребителско име.");
-            }
-        });
+    try {
+        const response = await fetch('/api/profile');
+        if (response.status === 401) {
+            // Not logged in, redirect to login
+            window.location.href = '/login.html';
+            return;
+        }
+        const userData = await response.json();
+        currentUsername = userData.username;
+    } catch (error) {
+        console.error('Error loading profile:', error);
+        showNotification('Error loading profile data', 'error');
     }
 
     const resetButton = document.getElementById("reset-button");
@@ -61,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let reason = reasonSelect.value;
 
                 if (amount && reason) {
-                    incomeEntries.push({ source: reason, amount: parseFloat(amount) });
+                    incomeEntries.push({ source: reason, amount: parseFloat(amount), username:  currentUsername});
                 }
             });
 
@@ -72,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let reason = reasonSelect.value;
 
                 if (amount && reason) {
-                    outcomeEntries.push({ source: reason, amount: parseFloat(amount) });
+                    outcomeEntries.push({ source: reason, amount: parseFloat(amount) ,username:  currentUsername});
                 }
             });
 

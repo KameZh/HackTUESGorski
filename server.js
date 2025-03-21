@@ -39,7 +39,7 @@ app.use(session({
     store: sessionStore,
     cookie: { secure: false, maxAge: 86400000 } 
 }));
-app.use('/finance', financeTracker);
+financeTracker.initRoutes(app);
 
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -86,84 +86,6 @@ const requireAuth = (req, res, next) => {
     next();
 };
 
-  
-  // Update database schema
-  async function updateSchema() {
-    try {
-      const connection = await mysql.createConnection(dbConfig);
-      const [columns] = await connection.execute('SHOW COLUMNS FROM users');
-      const existingColumns = columns.map(col => col.Field);
-  
-      const columnsToAdd = [];
-      if (!existingColumns.includes('created_at')) {
-        columnsToAdd.push('ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
-      }
-      if (!existingColumns.includes('achievements')) {
-        columnsToAdd.push('ADD COLUMN achievements INT DEFAULT 0');
-      }
-      if (!existingColumns.includes('calculations')) {
-        columnsToAdd.push('ADD COLUMN calculations INT DEFAULT 0');
-      }
-      if (!existingColumns.includes('last_active')) {
-        columnsToAdd.push('ADD COLUMN last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
-      }
-  
-      if (columnsToAdd.length > 0) {
-        const alterQuery = `ALTER TABLE users ${columnsToAdd.join(', ')}`;
-        await connection.execute(alterQuery);
-        console.log('Database schema updated successfully');
-      } else {
-        console.log('Database schema is up to date');
-      }
-      await connection.end();
-    } catch (error) {
-      console.error('Error updating schema:', error);
-    }
-  }
-  updateSchema();
-
-  app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'achv.html')));
-
-  app.get('/expenses', async (req, res) => {
-    const connection = await mysql.createConnection(dbConfig);
-    try {
-      const [results] = await connection.execute('SELECT category, amount FROM expenses');
-      res.json(results);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    } finally {
-      await connection.end();
-    }
-  });
-
-  app.get('/savings', async (req, res) => {
-    const connection = await mysql.createConnection(dbConfig);
-    try {
-      const [results] = await connection.execute('SELECT month, saved_amount FROM savings');
-      res.json(results);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    } finally {
-      await connection.end();
-    }
-  });
-  
-  app.get('/advice', async (req, res) => {
-    const connection = await mysql.createConnection(dbConfig);
-    try {
-      const [results] = await connection.execute('SELECT tip, potential_savings FROM advice ORDER BY RAND() LIMIT 1');
-      res.json(results[0]);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    } finally {
-      await connection.end();
-    }
-  });
-
-
-updateSchema();
-
-
 app.get('/api/profile', requireAuth, async (req, res) => {
     try {
         const connection = await mysql.createConnection(dbConfig);
@@ -196,6 +118,7 @@ app.get('/api/profile', requireAuth, async (req, res) => {
         res.status(500).json({ error: 'Database error' });
     }
 });
+
 
 app.use((req, res, next) => {
     if (req.session) {
@@ -253,7 +176,6 @@ app.post('/api/logout', requireAuth, (req, res) => {
 // Маршрут за регистрация
 app.post('/signup.html', async (req, res) => {
     const { username, password } = req.body;
-    
     // Validate input
     if (!username || !password) {
         return res.status(400).send('Username and password are required');
@@ -282,7 +204,7 @@ app.post('/signup.html', async (req, res) => {
 // Маршрут за вход
 app.post('/login.html', async (req, res) => {
     const { username, password } = req.body;
-
+    
     try {
         const connection = await mysql.createConnection(dbConfig);
         const [rows] = await connection.execute('SELECT * FROM users WHERE username = ?', [username]);
