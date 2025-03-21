@@ -1,6 +1,26 @@
+let currentUsername = ""; // Store the username globally
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ Script loaded successfully."); // Debugging log
 
+    // ✅ Handle Username Input
+    const usernameInput = document.getElementById("username");
+    const saveUsernameButton = document.getElementById("save-username");
+
+    if (saveUsernameButton) {
+        saveUsernameButton.addEventListener("click", function () {
+            const enteredUsername = usernameInput.value.trim();
+            if (enteredUsername !== "") {
+                currentUsername = enteredUsername;
+                console.log(`✅ Username saved: ${currentUsername}`);
+                alert(`Потребителското име "${currentUsername}" е запазено.`);
+            } else {
+                alert("❌ Моля, въведете валидно потребителско име.");
+            }
+        });
+    }
+
+    // ✅ Reset Button Logic
     const resetButton = document.getElementById("reset-button");
     if (resetButton) {
         resetButton.addEventListener("click", async function () {
@@ -24,13 +44,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // ✅ Form Submission Logic
     const financeForm = document.getElementById("finance-form");
 
     if (financeForm) {
         financeForm.addEventListener("submit", async function (event) {
             event.preventDefault();
 
-            console.log("✅ Form submitted."); // Debugging log
+            if (currentUsername === "") {
+                alert("❌ Моля, въведете потребителско име преди да изпратите формуляра.");
+                return;
+            }
+
+            console.log(`✅ Form submitted by ${currentUsername}.`); // Debugging log
 
             let incomeEntries = [];
             document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
@@ -58,13 +84,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 await fetch("/finance/add-income", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ entries: incomeEntries })
+                    body: JSON.stringify({ username: currentUsername, entries: incomeEntries })
                 });
 
                 await fetch("/finance/add-outcome", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ entries: outcomeEntries })
+                    body: JSON.stringify({ username: currentUsername, entries: outcomeEntries })
                 });
 
                 const response = await fetch("/finance/calculate-savings", {
@@ -79,8 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const data = await response.json();
 
-                document.getElementById("savings-result").textContent = `Препоръчителни спестявания: ${data.savings.toFixed(2)} лв`;
-                document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване: ${data.spending.toFixed(2)} лв`;
+                document.getElementById("savings-result").textContent = `Препоръчителни спестявания за ${currentUsername}: ${data.savings.toFixed(2)} лв`;
+                document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване за ${currentUsername}: ${data.spending.toFixed(2)} лв`;
 
             } catch (error) {
                 console.error("❌ Fetch Error:", error);
