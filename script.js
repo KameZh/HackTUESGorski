@@ -1,9 +1,8 @@
-let currentUsername = ""; // Store the username globally
+let currentUsername = "";
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("✅ Script loaded successfully."); // Debugging log
+    console.log("Script loaded successfully.");
 
-    // ✅ Handle Username Input
     const usernameInput = document.getElementById("username");
     const saveUsernameButton = document.getElementById("save-username");
 
@@ -11,22 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
         saveUsernameButton.addEventListener("click", function () {
             const enteredUsername = usernameInput.value.trim();
             if (enteredUsername !== "") {
-                currentUsername = enteredUsername;
-                console.log(`✅ Username saved: ${currentUsername}`);
+                currentUsernam= enteredUsername;
+                console.log(`Username saved: ${currentUsername}`);
                 alert(`Потребителското име "${currentUsername}" е запазено.`);
             } else {
-                alert("❌ Моля, въведете валидно потребителско име.");
+                alert("Моля, въведете валидно потребителско име.");
             }
         });
     }
 
-    // ✅ Reset Button Logic
     const resetButton = document.getElementById("reset-button");
     if (resetButton) {
         resetButton.addEventListener("click", async function () {
-            console.log("🔄 Reset button clicked."); // Debugging log
+            console.log("Reset button clicked.");
 
-            // Reset displayed results
             document.getElementById("savings-result").textContent = "Препоръчителни спестявания: ";
             document.getElementById("spending-result").textContent = "Препорачителни пари за свободно ползване: ";
 
@@ -37,14 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                console.log("✅ Financial data reset successfully.");
+                console.log("Financial data reset successfully.");
             } catch (error) {
-                console.error("❌ Error resetting financial data:", error);
+                console.error("Error resetting financial data:", error);
             }
         });
     }
 
-    // ✅ Form Submission Logic
     const financeForm = document.getElementById("finance-form");
 
     if (financeForm) {
@@ -52,11 +48,11 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             if (currentUsername === "") {
-                alert("❌ Моля, въведете потребителско име преди да изпратите формуляра.");
+                alert("Моля, въведете потребителско име преди да изпратите формуляра.");
                 return;
             }
 
-            console.log(`✅ Form submitted by ${currentUsername}.`); // Debugging log
+            console.log(`Form submitted by ${currentUsername}.`);
 
             let incomeEntries = [];
             document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
@@ -99,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
                 if (!response.ok) {
-                    console.error("❌ Error fetching savings:", await response.text());
+                    console.error("Error fetching savings:", await response.text());
                     throw new Error("Server error");
                 }
 
@@ -109,14 +105,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване за ${currentUsername}: ${data.spending.toFixed(2)} лв`;
 
             } catch (error) {
-                console.error("❌ Fetch Error:", error);
+                console.error("Fetch Error:", error);
                 alert("Грешка при изчисленията! Проверете сървъра.");
             }
         });
     }
 });
 
-// ✅ Function to add more income entries
 function addIncomeEntry() {
     let incomeDiv = document.createElement("div");
     incomeDiv.classList.add("income-entry");
@@ -140,7 +135,6 @@ function addIncomeEntry() {
     document.getElementById("income-entries").appendChild(incomeDiv);
 }
 
-// ✅ Function to add more outcome entries (Food & Transport added)
 function addOutcomeEntry() {
     let outcomeDiv = document.createElement("div");
     outcomeDiv.classList.add("outcome-entry");
@@ -167,7 +161,6 @@ function addOutcomeEntry() {
     document.getElementById("outcome-entries").appendChild(outcomeDiv);
 }
 
-// ✅ Function to remove an added entry
 function removeEntry(button) {
     button.closest(".income-entry, .outcome-entry").remove();
 }
