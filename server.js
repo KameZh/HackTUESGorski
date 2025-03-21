@@ -179,7 +179,7 @@ app.get('/api/session', (req, res) => {
 // Logout endpoint
 app.post('/api/logout', requireAuth, (req, res) => {
     req.session.destroy();
-    res.status(200).send('Logged out successfully');
+    res.status(200).send('Logged ouаt successfully');
 });
 
 // Маршрут за регистрация

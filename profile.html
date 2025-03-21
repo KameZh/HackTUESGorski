@@ -234,22 +234,6 @@
             }
         };
 
-        // Logout functionality
-        document.getElementById('logoutBtn').onclick = async function(e) {
-            e.preventDefault();
-            try {
-                const response = await fetch('/api/logout', { method: 'POST' });
-                if (response.ok) {
-                    window.location.href = '/login.html';
-                } else {
-                    showNotification('Error logging out', 'error');
-                }
-            } catch (error) {
-                console.error('Error during logout:', error);
-                showNotification('Error logging out', 'error');
-            }
-        };
-
         // Change password functionality
         document.getElementById('changePasswordBtn').onclick = async function() {
             const newPassword = prompt('Enter new password:');
