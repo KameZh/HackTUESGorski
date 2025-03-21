@@ -74,33 +74,57 @@
         </nav>
     </footer>
     <script>
-        document.getElementById('loginForm').onsubmit = async function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const data = {
-                username: formData.get('username'),
-                password: formData.get('password')
-            };
-            const response = await fetch(this.action, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            const text = await response.text();
-            const notification = document.getElementById('notification');
-            notification.innerText = text;
-            if (response.status === 200) {
-                notification.className = 'notification success';
-                setTimeout(() => {
-                    window.location.href = '/profile.html';
-                }, 1500);
-            } else {
-                notification.className = 'notification error';
-            }
-            notification.style.display = 'block';
-        };
-    </script>
+      // Проверка дали потребителят вече е логнат
+      fetch('/api/session')
+          .then(response => response.json())
+          .then(data => {
+              if (data.userId) {
+                  window.location.href = '/profile.html'; // Пренасочване, ако е логнат
+              }
+          })
+          .catch(error => console.error('Session check error:', error));
+  
+      // Обработване на формата за вход
+      document.getElementById('loginForm').onsubmit = async function(event) {
+          event.preventDefault();
+          
+          const formData = new FormData(this);
+          const data = {
+              username: formData.get('username'),
+              password: formData.get('password')
+          };
+  
+          const response = await fetch(this.action, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+          });
+  
+          const notification = document.getElementById('notification');
+  
+          try {
+              const responseData = await response.json();
+  
+              if (response.ok && responseData.success) {
+                  notification.innerText = "Успешен вход! Пренасочване...";
+                  notification.className = 'notification success';
+  
+                  setTimeout(() => {
+                      window.location.href = responseData.redirect; // Пренасочване към профила
+                  }, 1500);
+              } else {
+                  notification.innerText = responseData.error || "Грешка при влизане.";
+                  notification.className = 'notification error';
+              }
+          } catch (error) {
+              notification.innerText = "Грешка при обработка на отговора.";
+              notification.className = 'notification error';
+          }
+  
+          notification.style.display = 'block';
+      };
+  </script>
 </body>
 </html>
