@@ -98,6 +98,9 @@
       </nav>
     </footer>
     <script>
+      window.addEventListener("scroll", function () {
+        document.body.classList.toggle("scrolled", window.scrollY > 50);
+      });
       document.getElementById("signupForm").onsubmit = async function (event) {
         event.preventDefault();
         const formData = new FormData(this);
