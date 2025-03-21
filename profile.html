@@ -1,208 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gorski Profile</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
-    <style>
-        .profile-container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-right: 20px;
-            background-color: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            color: #666;
-        }
-
-        .profile-info h1 {
-            margin: 0;
-            color: #333;
-        }
-
-        .profile-info p {
-            margin: 5px 0;
-            color: #666;
-        }
-
-        .profile-section {
-            margin: 20px 0;
-        }
-
-        .profile-section h2 {
-            color: #444;
-            margin-bottom: 15px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .stat-card {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat-card h3 {
-            margin: 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .stat-card p {
-            margin: 10px 0 0;
-            color: #333;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .action-button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        .primary-button {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .secondary-button {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .action-button:hover {
-            opacity: 0.9;
-        }
-
-        .notification {
-            display: none;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid transparent;
-            border-radius: 4px;
-        }
-
-        .notification.success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-
-        .notification.error {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="logo">
-            <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-            <span>Gorski <small>Profile</small></span>
-        </div>
-        <nav class="menu">
-            <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-            <a href="calc.html"><img src="./img/calc.png" alt="Calc"></a>
-            <a href="achv.html"><img src="./img/trophy.png" alt="Achievements" /></a>
-            <a href="contact.html"><img src="./img/contacts.png" alt="Contacts" /></a>
-            <a href="#" id="logoutBtn"><img src="./img/login.png" alt="Logout" /></a>
-        </nav>
+      <div class="logo">
+        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
+        <span>Gorski <small>Profile</small></span>
+      </div>
+      <nav class="menu">
+        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
+        <a href="achv.html"
+          ><img src="./img/trophy.png" alt="Achievements"
+        /></a>
+        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
+        <a href="contact.html"
+          ><img src="./img/contacts.png" alt="Contacts"
+        /></a>
+        <a id="loginLink" href="/login.html"
+          ><img src="./img/login.png" alt="Login"
+        /></a>
+      </nav>
     </header>
 
     <div class="banner">
-        <img src="./img/forest_back.jpg" alt="Forest Background" />
+      <img src="./img/forest_back.jpg" alt="Forest Background" />
     </div>
 
     <div class="profile-container">
-        <div id="notification" class="notification"></div>
-        
-        <div class="profile-header">
-            <div class="profile-avatar" id="profileAvatar">
-                <!-- Will be filled by JavaScript -->
-            </div>
-            <div class="profile-info">
-                <h1 id="username">Loading...</h1>
-                <p>Member since <span id="memberSince">Loading...</span></p>
-            </div>
-        </div>
+      <div id="notification" class="notification"></div>
 
-        <div class="profile-section">
-            <h2>Statistics</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Achievements</h3>
-                    <p id="achievementsCount">0</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Calculations Made</h3>
-                    <p id="calculationsCount">0</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Days Active</h3>
-                    <p id="daysActive">0</p>
-                </div>
-            </div>
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">
+          <!-- Will be filled by JavaScript -->
         </div>
+        <div class="profile-info">
+          <h1 id="username">Loading...</h1>
+          <p>Member since <span id="memberSince">Loading...</span></p>
+        </div>
+      </div>
 
-        <div class="profile-section">
-            <h2>Account Settings</h2>
-            <div class="action-buttons">
-                <button class="action-button primary-button" id="changePasswordBtn">Change Password</button>
-                <button class="action-button secondary-button" id="deleteAccountBtn">Delete Account</button>
-            </div>
+      <div class="profile-section">
+        <h2>Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Achievements</h3>
+            <p id="achievementsCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Calculations Made</h3>
+            <p id="calculationsCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Days Active</h3>
+            <p id="daysActive">0</p>
+          </div>
         </div>
+      </div>
+
+      <div class="profile-section">
+        <h2>Account Settings</h2>
+        <div class="action-buttons">
+          <button class="action-button primary-button" id="changePasswordBtn">
+            Change Password
+          </button>
+          <button class="action-button secondary-button" id="deleteAccountBtn">
+            Delete Account
+          </button>
+        </div>
+      </div>
     </div>
 
     <footer>
-        <div class="footer-content">
-            За повече информация изпратете e-mail на
-            <a href="https://mail.google.com/mail/u/0/#inbox?compose=new">gorskite4@gmail.com</a>
-        </div>
-        <nav class="footer-menu">
-            <a href="index.html">Home</a>
-            <a href="calc.html">Calculator</a>
-            <a href="achv.html">Achievements</a>
-            <a href="contact.html">Contacts</a>
-        </nav>
+      <div class="footer-content">
+        За повече информация изпратете e-mail на
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
+          >gorskite4@gmail.com</a
+        >
+      </div>
+      <nav class="footer-menu">
+        <a href="index.html">Home</a>
+        <a href="calc.html">Calculator</a>
+        <a href="achv.html">Achievements</a>
+        <a href="gemini.html">AI Chat</a>
+        <a href="contact.html">Contacts</a>
+      </nav>
     </footer>
 
     <script>
@@ -233,58 +121,113 @@
                 showNotification('Error loading profile data', 'error');
             }
         };
+      // Check if user is logged in
+      window.onload = async function () {
+        try {
+          const response = await fetch("/api/profile");
+          if (response.status === 401) {
+            // Not logged in, redirect to login
+            window.location.href = "/login.html";
+            return;
+          }
+          const userData = await response.json();
 
-        // Change password functionality
-        document.getElementById('changePasswordBtn').onclick = async function() {
-            const newPassword = prompt('Enter new password:');
-            if (!newPassword) return;
+          // Update profile information
+          document.getElementById("username").textContent = userData.username;
+          document.getElementById("memberSince").textContent = new Date(
+            userData.created_at
+          ).toLocaleDateString();
+          document.getElementById("profileAvatar").textContent =
+            userData.username[0].toUpperCase();
 
-            try {
-                const response = await fetch('/api/change-password', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ newPassword })
-                });
-
-                if (response.ok) {
-                    showNotification('Password changed successfully', 'success');
-                } else {
-                    showNotification('Error changing password', 'error');
-                }
-            } catch (error) {
-                console.error('Error changing password:', error);
-                showNotification('Error changing password', 'error');
-            }
-        };
-
-        // Delete account functionality
-        document.getElementById('deleteAccountBtn').onclick = async function() {
-            if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/delete-account', { method: 'POST' });
-                if (response.ok) {
-                    window.location.href = '/signup.html';
-                } else {
-                    showNotification('Error deleting account', 'error');
-                }
-            } catch (error) {
-                console.error('Error deleting account:', error);
-                showNotification('Error deleting account', 'error');
-            }
-        };
-
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.innerText = message;
-            notification.className = `notification ${type}`;
-            notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
+          // Update statistics if available
+          if (userData.statistics) {
+            document.getElementById("achievementsCount").textContent =
+              userData.statistics.achievements || 0;
+            document.getElementById("calculationsCount").textContent =
+              userData.statistics.calculations || 0;
+            document.getElementById("daysActive").textContent =
+              userData.statistics.daysActive || 0;
+          }
+        } catch (error) {
+          console.error("Error loading profile:", error);
+          showNotification("Error loading profile data", "error");
         }
+      };
+
+      // Logout functionality
+      document.getElementById("logoutBtn").onclick = async function (e) {
+        e.preventDefault();
+        try {
+          const response = await fetch("/api/logout", { method: "POST" });
+          if (response.ok) {
+            window.location.href = "/login.html";
+          } else {
+            showNotification("Error logging out", "error");
+          }
+        } catch (error) {
+          console.error("Error during logout:", error);
+          showNotification("Error logging out", "error");
+        }
+      };
+
+      // Change password functionality
+      document.getElementById("changePasswordBtn").onclick = async function () {
+        const newPassword = prompt("Enter new password:");
+        if (!newPassword) return;
+
+        try {
+          const response = await fetch("/api/change-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ newPassword }),
+          });
+
+          if (response.ok) {
+            showNotification("Password changed successfully", "success");
+          } else {
+            showNotification("Error changing password", "error");
+          }
+        } catch (error) {
+          console.error("Error changing password:", error);
+          showNotification("Error changing password", "error");
+        }
+      };
+
+      // Delete account functionality
+      document.getElementById("deleteAccountBtn").onclick = async function () {
+        if (
+          !confirm(
+            "Are you sure you want to delete your account? This action cannot be undone."
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/delete-account", {
+            method: "POST",
+          });
+          if (response.ok) {
+            window.location.href = "/signup.html";
+          } else {
+            showNotification("Error deleting account", "error");
+          }
+        } catch (error) {
+          console.error("Error deleting account:", error);
+          showNotification("Error deleting account", "error");
+        }
+      };
+
+      function showNotification(message, type) {
+        const notification = document.getElementById("notification");
+        notification.innerText = message;
+        notification.className = `notification ${type}`;
+        notification.style.display = "block";
+        setTimeout(() => {
+          notification.style.display = "none";
+        }, 3000);
+      }
     </script>
-</body>
-</html> 
+  </body>
+</html>
