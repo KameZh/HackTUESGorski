@@ -6,7 +6,8 @@
     "express-mysql-session": "^3.0.3",
     "express-session": "^1.18.1",
     "mysql2": "^3.14.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "session": "^0.1.0"
   },
   "type": "commonjs",
   "scripts": {
