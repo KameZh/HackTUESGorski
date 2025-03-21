@@ -181,7 +181,7 @@ main {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-size: 20px;
+  font-size: 25px;
   background: #f4f4f9;
   border: 2px solid green;
   transition: background-color 0.3s ease, padding 0.3s ease;
@@ -370,7 +370,7 @@ input[type="password"]:focus {
 }
 
 button {
-  background-color: #04aa6d;
+  background-color: green;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -391,8 +391,53 @@ button.add {
 }
 
 button:hover {
-  background-color: green;
+  background-color: #04aa6d;
   transform: scale(1.02);
+}
+
+.reset-button {
+  background-color: rgba(255, 0, 0, 0.5); /* Base color red with mid opacity */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: rgba(255, 0, 0, 1); /* Increase opacity */
+  transform: scale(1.05); /* Increase scale */
+  opacity: 1; /* Ensure full opacity */
+}
+
+.reset-button:hover {
+  background-color: #f44336;
+}
+
+.change {
+  background-color: green;
+  opacity: 0.5; /* Base color red with mid opacity */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.change:hover {
+  background-color: green; /* Increase opacity */
+  transform: scale(1.05); /* Increase scale */
+  opacity: 1; /* Ensure full opacity */
+}
+
+.change:hover {
+  background-color: green;
 }
 
 span.psw {

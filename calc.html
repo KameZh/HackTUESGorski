@@ -61,6 +61,7 @@
               <br>
               <button type="button" class="add" onclick="addIncomeEntry()">Добави още доход</button>
               <br>
+              <hr>
               <br>
               <h3>Разходи</h3>
               <br>
@@ -73,9 +74,9 @@
                     <select name="outcome-reason[]" required onchange="toggleCustomReason(this)">
                         <option value="bills">Сметки</option>
                         <option value="entertainment">Развлечения</option>
-                        <option value="other">Друго</option>
                         <option value="food">Храна</option>
                         <option value="transport">Транспорт</option>
+                        <option value="other">Друго</option>
                     </select>
                     <br />
                     <br>
@@ -99,7 +100,7 @@
             <p id="spending-result"> Препорачителни пари за свободно ползване: </p>
             <br>
             <br>
-            <button id="reset-button" style="padding: 5px 10px; background: gray; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 20px; margin-top: 10px;">Нулирай</button>
+            <button class="reset-button">Нулирай</button>
         </div>
         </div>
       </div>
