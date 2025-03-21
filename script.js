@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         const response = await fetch('/api/profile');
         if (response.status === 401) {
-            // Not logged in, redirect to login
+
+            
             window.location.href = '/login.html';
             return;
         }

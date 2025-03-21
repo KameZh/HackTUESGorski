@@ -89,23 +89,19 @@
     </footer>
 
     <script>
-        // Check if user is logged in
         window.onload = async function() {
             try {
                 const response = await fetch('/api/profile');
                 if (response.status === 401) {
-                    // Not logged in, redirect to login
                     window.location.href = '/login.html';
                     return;
                 }
                 const userData = await response.json();
                 
-                // Update profile information
                 document.getElementById('username').textContent = userData.username;
                 document.getElementById('memberSince').textContent = new Date(userData.created_at).toLocaleDateString();
                 document.getElementById('profileAvatar').textContent = userData.username[0].toUpperCase();
                 
-                // Update statistics if available
                 if (userData.statistics) {
                     document.getElementById('calculationsCount').textContent = userData.statistics.calculations || 0;
                     document.getElementById('daysActive').textContent = userData.statistics.daysActive || 0;

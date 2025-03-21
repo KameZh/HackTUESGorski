@@ -52,7 +52,7 @@
 
         sendButton.addEventListener("click", async () => {
           const question = questionInput.value.trim();
-          if (question === "") return; // Prevent sending empty questions
+          if (question === "") return;
           
           chat.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
           questionInput.value = "";
@@ -67,7 +67,7 @@
           const data = await response.json();
           loadingIndicator.style.display = "none";
           chat.innerHTML += `<p><strong>Gemini:</strong> ${data.answer}</p>`;
-          chat.scrollTop = chat.scrollHeight; // Scroll to bottom
+          chat.scrollTop = chat.scrollHeight;
         });
       </script>
       <p>

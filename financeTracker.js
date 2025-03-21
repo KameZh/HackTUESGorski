@@ -1,5 +1,5 @@
-let incomes = {}; // Store incomes as { source: amount }
-let outcomes = {}; // Store outcomes as { source: amount }
+let incomes = {}; 
+let outcomes = {}; 
 const mysql = require('mysql2/promise');
 const dbConfig = {
     host: '127.0.0.1',
@@ -9,7 +9,6 @@ const dbConfig = {
 };
 
 function initRoutes(app) {
-    // ✅ Add income (update if source exists)
     app.post("/finance/add-income", async(req, res) => {
         const  {entries}  = req.body;
         console.log(entries);

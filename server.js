@@ -163,7 +163,7 @@ app.post('/api/change-password', requireAuth, async (req, res) => {
     }
 });
 
-// Delete account endpoint
+
 app.post('/api/delete-account', requireAuth, async (req, res) => {
     try {
         const connection = await mysql.createConnection(dbConfig);
@@ -182,16 +182,16 @@ app.get('/api/session', (req, res) => {
     res.json(req.session);
 });
 
-// Logout endpoint
+
 app.post('/api/logout', requireAuth, (req, res) => {
     req.session.destroy();
     res.status(200).send('Logged out successfully');
 });
 
-// Маршрут за регистрация
+
 app.post('/signup.html', async (req, res) => {
     const { username, password } = req.body;
-    // Validate input
+
     if (!username || !password) {
         return res.status(400).send('Username and password are required');
     }
@@ -216,7 +216,7 @@ app.post('/signup.html', async (req, res) => {
     }
 });
 
-// Маршрут за вход
+
 app.post('/login.html', async (req, res) => {
     const { username, password } = req.body;
     
@@ -246,7 +246,7 @@ app.post('/login.html', async (req, res) => {
     }
 });
 
-// Стартиране на сървъра
+
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
 });
