@@ -227,6 +227,7 @@ main {
   height: auto;
   border-radius: 10px;
   transition: transform 0.3s ease;
+  margin: 25px 0;
 }
 
 .right-column img:hover {
