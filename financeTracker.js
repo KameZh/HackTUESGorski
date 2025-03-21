@@ -46,12 +46,17 @@ function initRoutes(app) {
         const outcomePercentage = (totalOutcome / totalIncome) * 100;
         let savePercentage, spendPercentage;
 
-        if (outcomePercentage > 50) {
-            savePercentage = 60;
-            spendPercentage = 40;
-        } else {
-            savePercentage = 50;
-            spendPercentage = 50;
+        if (outcomePercentage > 60) {
+            savePercentage = 66;
+            spendPercentage = 33;
+        } 
+        if (outcomePercentage < 60 && outcomePercentage > 40) {
+            savePercentage = 40;
+            spendPercentage = 60;
+        }
+        if(outcomePercentage < 40){
+            savePercentage = 75
+            spendPercentage = 25
         }
 
         const savings = ((totalIncome - totalOutcome) * savePercentage) / 100;

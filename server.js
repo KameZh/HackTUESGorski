@@ -3,7 +3,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2/promise');
-const session = require('express-session')
 const session = require('express-session');
 const financeTracker = require('./financeTracker.js');
 const MySQLStore = require('express-mysql-session')(session);
