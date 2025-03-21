@@ -68,8 +68,23 @@ async function run() {
   
 
 app.post('/ask', async (req, res) => {
-    
-    run();
+    const question = req.body.question;
+    if (!question) {
+        return res.status(400).json({ error: 'Question is required' });
+    }
+
+    try {
+        const chatSession = model.startChat({
+            generationConfig,
+            history: [],
+        });
+        const result = await chatSession.sendMessage(question);
+        const answer = result.response.text();
+        res.json({ answer: answer });
+    } catch (error) {
+        console.error('Error processing question:', error);
+        res.status(500).json({ error: 'Failed to get response from Gemini' });
+    }
 });
 
 const dbConfig = {
