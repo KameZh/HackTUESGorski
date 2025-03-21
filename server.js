@@ -26,7 +26,7 @@ app.use(session({
 const dbConfig = {
     host: '127.0.0.1',
     user: 'root',
-    password: '',
+    password: 'Kirikuk123$',
     database: 'db'
 };
 
@@ -223,38 +223,7 @@ app.post('/login.html', async (req, res) => {
     }
 });
 
-// Маршрути за HTML страници
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
 
-app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'about.html'));
-});
-
-app.get('/videos', (req, res) => {
-    res.sendFile(path.join(__dirname, 'videos.html'));
-});
-
-app.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, 'contact.html'));
-});
-
-app.get('/login.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
-});
-
-app.get('/signup.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'signup.html'));
-});
-
-app.get('/style.css', (req, res) => {
-    res.sendFile(path.join(__dirname, 'style.css'));
-});
 
 // Стартиране на сървъра
 app.listen(PORT, () => {
