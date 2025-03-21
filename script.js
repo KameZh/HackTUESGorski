@@ -1,71 +1,101 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ Script loaded successfully."); // Debugging log
+
+    const resetButton = document.getElementById("reset-button");
+    if (resetButton) {
+        resetButton.addEventListener("click", async function () {
+            console.log("🔄 Reset button clicked."); // Debugging log
+
+            // Reset displayed results
+            document.getElementById("savings-result").textContent = "Препоръчителни спестявания: ";
+            document.getElementById("spending-result").textContent = "Препорачителни пари за свободно ползване: ";
+
+            try {
+                const response = await fetch("/finance/reset-values", { method: "POST" });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                console.log("✅ Financial data reset successfully.");
+            } catch (error) {
+                console.error("❌ Error resetting financial data:", error);
+            }
+        });
+    }
+
+    // ✅ Move form submission logic separately
     const financeForm = document.getElementById("finance-form");
 
-    financeForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+    if (financeForm) {
+        financeForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
 
-        let incomeEntries = [];
-        document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
-            let amount = entry.querySelector("input[name='sum[]']").value;
-            let reasonSelect = entry.querySelector("select[name='income-reason[]']");
-            let reason = reasonSelect.value === "other"
-                ? entry.querySelector("input[name='custom-income-reason[]']").value
-                : reasonSelect.value;
+            console.log("✅ Form submitted."); // Debugging log
 
-            if (amount && reason) {
-                incomeEntries.push({ source: reason, amount: parseFloat(amount) });
+            let incomeEntries = [];
+            document.querySelectorAll("#income-entries .income-entry").forEach(entry => {
+                let amount = entry.querySelector("input[name='sum[]']").value;
+                let reasonSelect = entry.querySelector("select[name='income-reason[]']");
+                let reason = reasonSelect.value === "other"
+                    ? entry.querySelector("input[name='custom-income-reason[]']").value
+                    : reasonSelect.value;
+
+                if (amount && reason) {
+                    incomeEntries.push({ source: reason, amount: parseFloat(amount) });
+                }
+            });
+
+            let outcomeEntries = [];
+            document.querySelectorAll("#outcome-entries .outcome-entry").forEach(entry => {
+                let amount = entry.querySelector("input[name='sum[]']").value;
+                let reasonSelect = entry.querySelector("select[name='outcome-reason[]']");
+                let reason = reasonSelect.value === "other"
+                    ? entry.querySelector("input[name='custom-outcome-reason[]']").value
+                    : reasonSelect.value;
+
+                if (amount && reason) {
+                    outcomeEntries.push({ source: reason, amount: parseFloat(amount) });
+                }
+            });
+
+            try {
+                await fetch("/finance/add-income", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ entries: incomeEntries })
+                });
+
+                await fetch("/finance/add-outcome", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ entries: outcomeEntries })
+                });
+
+                const response = await fetch("/finance/calculate-savings", {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (!response.ok) {
+                    console.error("❌ Error fetching savings:", await response.text());
+                    throw new Error("Server error");
+                }
+
+                const data = await response.json();
+
+                document.getElementById("savings-result").textContent = `Препоръчителни спестявания: ${data.savings.toFixed(2)} лв`;
+                document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване: ${data.spending.toFixed(2)} лв`;
+
+            } catch (error) {
+                console.error("❌ Fetch Error:", error);
+                alert("Грешка при изчисленията! Проверете сървъра.");
             }
         });
-
-        let outcomeEntries = [];
-        document.querySelectorAll("#outcome-entries .outcome-entry").forEach(entry => {
-            let amount = entry.querySelector("input[name='sum[]']").value;
-            let reasonSelect = entry.querySelector("select[name='outcome-reason[]']");
-            let reason = reasonSelect.value === "other"
-                ? entry.querySelector("input[name='custom-outcome-reason[]']").value
-                : reasonSelect.value;
-
-            if (amount && reason) {
-                outcomeEntries.push({ source: reason, amount: parseFloat(amount) });
-            }
-        });
-
-        try {
-            await fetch("/finance/add-income", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ entries: incomeEntries })
-            });
-
-            await fetch("/finance/add-outcome", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ entries: outcomeEntries })
-            });
-
-            const response = await fetch("/finance/calculate-savings", {
-                method: "GET",
-                headers: { "Accept": "application/json" }
-            });
-
-            if (!response.ok) {
-                console.error("Error fetching savings:", await response.text());
-                throw new Error("Server error");
-            }
-
-            const data = await response.json();
-
-            document.getElementById("savings-result").textContent = `Препоръчителни спестявания: ${data.savings.toFixed(2)} лв`;
-            document.getElementById("spending-result").textContent = `Препорачителни пари за свободно ползване: ${data.spending.toFixed(2)} лв`;
-
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            alert("Грешка при изчисленията! Проверете сървъра.");
-        }
-    });
+    }
 });
 
-// Function to add more income entries
+// ✅ Function to add more income entries
 function addIncomeEntry() {
     let incomeDiv = document.createElement("div");
     incomeDiv.classList.add("income-entry");
@@ -90,7 +120,7 @@ function addIncomeEntry() {
     document.getElementById("income-entries").appendChild(incomeDiv);
 }
 
-// Function to add more outcome entries
+// ✅ Function to add more outcome entries
 function addOutcomeEntry() {
     let outcomeDiv = document.createElement("div");
     outcomeDiv.classList.add("outcome-entry");
@@ -116,12 +146,12 @@ function addOutcomeEntry() {
     document.getElementById("outcome-entries").appendChild(outcomeDiv);
 }
 
-// Function to remove an added entry
+// ✅ Function to remove an added entry
 function removeEntry(button) {
     button.closest(".income-entry, .outcome-entry").remove();
 }
 
-// Show custom reason input when "Other" is selected
+// ✅ Show custom reason input when "Other" is selected
 function toggleCustomReason(selectElement) {
     let customInput = selectElement.parentElement.querySelector(".custom-reason");
     customInput.style.display = selectElement.value === "other" ? "block" : "none";

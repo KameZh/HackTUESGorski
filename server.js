@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2/promise');
+const session = require('express-session')
 const financeTracker = require('./financeTracker.js');
 
 const app = express();
@@ -70,6 +71,8 @@ app.get('/signup.html', (req, res) => {
 app.get('/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'style.css'));
 });
+
+financeTracker.initRoutes(app);
 
 // Стартиране на сървъра
 app.listen(PORT, () => {
