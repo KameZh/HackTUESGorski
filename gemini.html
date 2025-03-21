@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Help</title>
+    <style>
+        body { font-family: sans-serif; }
+        #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; }
+    </style>
+</head>
+<body>
+    <h1>Financial Help Chat</h1>
+    <div id="chat"></div>
+    <input type="text" id="question" placeholder="Ask a financial question">
+    <button id="send">Send</button>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const questionInput = document.getElementById('question');
+        const sendButton = document.getElementById('send');
+
+        sendButton.addEventListener('click', async () => {
+            const question = questionInput.value;
+            chat.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
+            questionInput.value = '';
+
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: question })
+            });
+
+            const data = await response.json();
+            chat.innerHTML += `<p><strong>Gemini:</strong> ${data.answer}</p>`;
+            chat.scrollTop = chat.scrollHeight; // Scroll to bottom
+        });
+    </script>
+    <p>Disclaimer: This information is for educational purposes only and should not be considered financial advice.</p>
+</body>
+</html>

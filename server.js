@@ -11,14 +11,33 @@ const PORT = 7700;
 const sessionStore = new MySQLStore({
     host: '127.0.0.1',
     user: 'root',
-    password: 'Kirikuk123$',
+  password: 'Kirikuk123$',
     database: 'db',
     clearExpired: true,
     checkExpirationInterval: 900000, // Проверка на изтекли сесии (15 мин)
-    expiration: 86400000 // 1 ден живот на сесията
+    expiration: 86400000 // 1 ден живот на сесиятa
 });
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+require('dotenv').config(); // Load environment variables
 
+app.use(express.static('public')); // Serve static files (HTML, CSS)
+app.use(express.json()); // Parse JSON requests
 
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY); // Use environment variable to store the api key.
+const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+app.post('/ask', async (req, res) => {
+    try {
+        const question = req.body.question;
+        const result = await model.generateContent(question);
+        const response = await result.response;
+        const text = response.text();
+        res.json({ answer: text });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Something went wrong.' });
+    }
+});
 
 // Add support for different types of form data
 app.use(express.json());
