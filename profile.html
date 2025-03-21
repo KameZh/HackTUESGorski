@@ -92,7 +92,6 @@
       window.addEventListener("scroll", function () {
         document.body.classList.toggle("scrolled", window.scrollY > 50);
       });
-        // Check if user is logged in
         window.onload = async function() {
             try {
                 const response = await fetch('/api/profile');
