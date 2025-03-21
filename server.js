@@ -4,22 +4,35 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2/promise');
 const session = require('express-session');
-
+const financeTracker = require('./financeTracker.js');
+const MySQLStore = require('express-mysql-session')(session);
 const app = express();
 const PORT = 7700;
+const sessionStore = new MySQLStore({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'Kirikuk123$',
+    database: 'db',
+    clearExpired: true,
+    checkExpirationInterval: 900000, // Проверка на изтекли сесии (15 мин)
+    expiration: 86400000 // 1 ден живот на сесията
+});
+
+
 
 // Add support for different types of form data
 app.use(express.json());
 app.use(express.raw());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
-
+app.use("/finance", financeTracker);
 // Add session support
 app.use(session({
     secret: 'gorski-secret-key',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } // Set to true if using HTTPS
+    store: sessionStore,
+    cookie: { secure: false, maxAge: 86400000 } // 1 ден
 }));
 
 // Настройки за връзка с базата данни
@@ -114,6 +127,13 @@ app.get('/api/profile', requireAuth, async (req, res) => {
     }
 });
 
+app.use((req, res, next) => {
+    if (req.session) {
+        req.session.touch(); // Поддържа сесията активна
+    }
+    next();
+});
+
 // Change password endpoint
 app.post('/api/change-password', requireAuth, async (req, res) => {
     const { newPassword } = req.body;
@@ -148,6 +168,12 @@ app.post('/api/delete-account', requireAuth, async (req, res) => {
         console.error('Error deleting account:', error);
         res.status(500).send('Database error');
     }
+});
+
+
+app.get('/api/session', (req, res) => {
+    console.log("Session data:", req.session);
+    res.json(req.session);
 });
 
 // Logout endpoint
@@ -188,38 +214,30 @@ app.post('/signup.html', async (req, res) => {
 // Маршрут за вход
 app.post('/login.html', async (req, res) => {
     const { username, password } = req.body;
-    
-    if (!username || !password) {
-        return res.status(400).send('Username and password are required');
-    }
-    
+
     try {
-        console.log('Received login request for username:', username);
         const connection = await mysql.createConnection(dbConfig);
         const [rows] = await connection.execute('SELECT * FROM users WHERE username = ?', [username]);
-        
+
         if (rows.length > 0 && await bcrypt.compare(password, rows[0].password)) {
-            // Update last active date
-            await connection.execute(
-                'UPDATE users SET last_active = CURRENT_TIMESTAMP WHERE id = ?',
-                [rows[0].id]
-            );
-            
-            // Set session
             req.session.userId = rows[0].id;
             req.session.username = rows[0].username;
             
-            console.log('Login successful');
-            res.status(200).send('Login successful');
+            req.session.save(err => { 
+                if (err) {
+                    console.error('Session save error:', err);
+                    return res.status(500).json({ error: 'Session error' });
+                }
+                res.json({ success: true, redirect: '/profile.html' });
+            });
         } else {
-            console.log('Invalid credentials');
-            res.status(401).send('Invalid credentials');
+            res.status(401).json({ error: 'Invalid credentials' });
         }
-        
+
         await connection.end();
     } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).send('Database error');
+        console.error('Login error:', error);
+        res.status(500).json({ error: 'Database error' });
     }
 });
 
