@@ -3,202 +3,168 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gorski Profile</title>
+    <title>Profile — Gorski Finance</title>
+    <meta name="description" content="Your Gorski Finance account profile and statistics." />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-        <span>Gorski <small>Profile</small></span>
-      </div>
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <a href="index.html" class="logo">
+        <img src="./img/gorsko-logo.png" alt="Gorski Logo" class="logo-img" />
+        <div class="logo-text">
+          <span class="brand">Gorski</span>
+          <span class="sub">Profile</span>
+        </div>
+      </a>
       <nav class="menu">
-        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
-        <a href="achv.html"
-          ><img src="./img/trophy.png" alt="Achievements"
-        /></a>
-        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
-        <a href="contact.html"
-          ><img src="./img/contacts.png" alt="Contacts"
-        /></a>
-        <a id="loginLink" href="/login.html"
-          ><img src="./img/login.png" alt="Login"
-        /></a>
+        <a href="index.html" title="Home"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html" title="Calculator"><img src="./img/calc.png" alt="Calculator" /></a>
+        <a href="achv.html" title="Achievements"><img src="./img/trophy.png" alt="Achievements" /></a>
+        <a href="gemini.html" title="AI Chat"><img src="./img/gemini.png" alt="AI Chat" /></a>
+        <a href="contact.html" title="Contact"><img src="./img/contacts.png" alt="Contact" /></a>
+        <a id="loginLink" href="/login.html" class="active" title="Profile"><img src="./img/profile.png" alt="Profile" /></a>
       </nav>
     </header>
 
-    <div class="banner">
-      <img src="./img/forest_back.jpg" alt="Forest Background" />
-    </div>
+    <!-- MAIN -->
+    <div class="page-content">
+      <main>
+        <!-- Notification -->
+        <div id="notification" class="notification"></div>
 
-    <div class="profile-container">
-      <div id="notification" class="notification"></div>
-
-      <div class="profile-header">
-        <div class="profile-avatar" id="profileAvatar">
-        </div>
-        <div class="profile-info">
-          <h1 id="username">Loading...</h1>
-          <p>Member since <span id="memberSince">Loading...</span></p>
-        </div>
-      </div>
-
-      <div class="profile-section">
-        <h2>Statistics</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <h3>Calculations Made</h3>
-            <p id="calculationsCount">0</p>
-          </div>
-          <div class="stat-card">
-            <h3>Days Active</h3>
-            <p id="daysActive">0</p>
+        <!-- Profile header card -->
+        <div class="profile-hero">
+          <div class="profile-avatar" id="profileAvatar">?</div>
+          <div class="profile-info">
+            <h1 id="username">Loading…</h1>
+            <p>Member since <strong id="memberSince">…</strong></p>
           </div>
         </div>
-      </div>
 
-      <div class="profile-section">
-        <h2>Account Settings</h2>
-        <div class="action-buttons">
-          <button class="change" id="changePasswordBtn" class="action-button primary-button">
-            Change Password
-          </button>
-          <button class="reset-button" id="deleteAccountBtn" class="action-button secondary-button">
-            Delete Account</button>
-          </button>
+        <!-- Stats -->
+        <div class="profile-section">
+          <h2>📊 Statistics</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>Calculations Made</h3>
+              <p id="calculationsCount">0</p>
+            </div>
+            <div class="stat-card">
+              <h3>Days Active</h3>
+              <p id="daysActive">0</p>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!-- Account settings -->
+        <div class="profile-section">
+          <h2>⚙️ Account Settings</h2>
+          <div class="action-buttons">
+            <button class="change action-button" id="changePasswordBtn">🔑 Change Password</button>
+            <button class="reset-button action-button" id="deleteAccountBtn">🗑️ Delete Account</button>
+          </div>
+        </div>
+
+        <!-- Logout -->
+        <div class="profile-section">
+          <h2>🚪 Session</h2>
+          <div class="action-buttons">
+            <button class="btn-secondary action-button" id="logoutBtn">Sign Out</button>
+          </div>
+        </div>
+      </main>
     </div>
 
+    <!-- FOOTER -->
     <footer>
       <div class="footer-content">
-        За повече информация изпратете e-mail на
-        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
-          >gorskite4@gmail.com</a
-        >
+        © 2025 Gorski Finance &nbsp;|&nbsp;
+        <a href="mailto:gorskite4@gmail.com">gorskite4@gmail.com</a>
       </div>
       <nav class="footer-menu">
         <a href="index.html">Home</a>
         <a href="calc.html">Calculator</a>
         <a href="achv.html">Achievements</a>
         <a href="gemini.html">AI Chat</a>
-        <a href="contact.html">Contacts</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </footer>
 
     <script>
-      window.addEventListener("scroll", function () {
-        document.body.classList.toggle("scrolled", window.scrollY > 50);
+      window.addEventListener('scroll', function () {
+        document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
       });
-        window.onload = async function() {
-            try {
-                const response = await fetch('/api/profile');
-                if (response.status === 401) {
-                    window.location.href = '/login.html';
-                    return;
-                }
-                const userData = await response.json();
-                
-                document.getElementById('username').textContent = userData.username;
-                document.getElementById('memberSince').textContent = new Date(userData.created_at).toLocaleDateString();
-                document.getElementById('profileAvatar').textContent = userData.username[0].toUpperCase();
-                
-                if (userData.statistics) {
-                    document.getElementById('calculationsCount').textContent = userData.statistics.calculations || 0;
-                    document.getElementById('daysActive').textContent = userData.statistics.daysActive || 0;
-                }
-            } catch (error) {
-                console.error('Error loading profile:', error);
-                showNotification('Error loading profile data', 'error');
-            }
-        };
+
+      // Load profile (original logic preserved)
       window.onload = async function () {
         try {
-          const response = await fetch("/api/profile");
+          const response = await fetch('/api/profile');
           if (response.status === 401) {
-            window.location.href = "/login.html";
+            window.location.href = '/login.html';
             return;
           }
           const userData = await response.json();
 
-         
-          document.getElementById("username").textContent = userData.username;
-          document.getElementById("memberSince").textContent = new Date(
-            userData.created_at
-          ).toLocaleDateString();
-          document.getElementById("profileAvatar").textContent =
-            userData.username[0].toUpperCase();
+          document.getElementById('username').textContent = userData.username;
+          document.getElementById('memberSince').textContent = new Date(userData.created_at).toLocaleDateString();
+          document.getElementById('profileAvatar').textContent = userData.username[0].toUpperCase();
 
-         
           if (userData.statistics) {
-            document.getElementById("calculationsCount").textContent =
-              userData.statistics.calculations || 0;
-            document.getElementById("daysActive").textContent =
-              userData.statistics.daysActive || 0;
+            document.getElementById('calculationsCount').textContent = userData.statistics.calculations || 0;
+            document.getElementById('daysActive').textContent = userData.statistics.daysActive || 0;
           }
         } catch (error) {
-          console.error("Error loading profile:", error);
-          showNotification("Error loading profile data", "error");
+          console.error('Error loading profile:', error);
+          showNotification('Error loading profile data', 'error');
         }
       };
-    
-      document.getElementById("changePasswordBtn").onclick = async function () {
-        const newPassword = prompt("Enter new password:");
-        if (!newPassword) return;
 
+      // Change password (original logic preserved)
+      document.getElementById('changePasswordBtn').onclick = async function () {
+        const newPassword = prompt('Enter new password:');
+        if (!newPassword) return;
         try {
-          const response = await fetch("/api/change-password", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+          const response = await fetch('/api/change-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ newPassword }),
           });
-
-          if (response.ok) {
-            showNotification("Password changed successfully", "success");
-          } else {
-            showNotification("Error changing password", "error");
-          }
+          showNotification(response.ok ? 'Password changed successfully ✓' : 'Error changing password', response.ok ? 'success' : 'error');
         } catch (error) {
-          console.error("Error changing password:", error);
-          showNotification("Error changing password", "error");
+          console.error('Error changing password:', error);
+          showNotification('Error changing password', 'error');
         }
       };
 
-      
-      document.getElementById("deleteAccountBtn").onclick = async function () {
-        if (
-          !confirm(
-            "Are you sure you want to delete your account? This action cannot be undone."
-          )
-        ) {
-          return;
-        }
-
+      // Delete account (original logic preserved)
+      document.getElementById('deleteAccountBtn').onclick = async function () {
+        if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) return;
         try {
-          const response = await fetch("/api/delete-account", {
-            method: "POST",
-          });
-          if (response.ok) {
-            window.location.href = "/signup.html";
-          } else {
-            showNotification("Error deleting account", "error");
-          }
+          const response = await fetch('/api/delete-account', { method: 'POST' });
+          if (response.ok) { window.location.href = '/signup.html'; }
+          else { showNotification('Error deleting account', 'error'); }
         } catch (error) {
-          console.error("Error deleting account:", error);
-          showNotification("Error deleting account", "error");
+          console.error('Error deleting account:', error);
+          showNotification('Error deleting account', 'error');
         }
+      };
+
+      // Logout
+      document.getElementById('logoutBtn').onclick = async function () {
+        try {
+          await fetch('/api/logout', { method: 'POST' });
+        } catch (e) {}
+        window.location.href = '/login.html';
       };
 
       function showNotification(message, type) {
-        const notification = document.getElementById("notification");
+        const notification = document.getElementById('notification');
         notification.innerText = message;
         notification.className = `notification ${type}`;
-        notification.style.display = "block";
-        setTimeout(() => {
-          notification.style.display = "none";
-        }, 3000);
+        notification.style.display = 'block';
+        setTimeout(() => { notification.style.display = 'none'; }, 3000);
       }
     </script>
   </body>

@@ -3,126 +3,137 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gorski Finance Calculator</title>
+    <title>Finance Calculator — Gorski Finance</title>
+    <meta name="description" content="Calculate your income, expenses and get personalized savings recommendations." />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
-    <script>
-      window.addEventListener("scroll", function () {
-        document.body.classList.toggle("scrolled", window.scrollY > 50);
-      });
-    </script>
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-        <span>Gorski<br /><small>Finance Calculator</small></span>
-      </div>
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <a href="index.html" class="logo">
+        <img src="./img/gorsko-logo.png" alt="Gorski Logo" class="logo-img" />
+        <div class="logo-text">
+          <span class="brand">Gorski</span>
+          <span class="sub">Finance Calculator</span>
+        </div>
+      </a>
       <nav class="menu">
-        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-            <a href="calc.html"><img src="./img/calc.png" alt="Calc"></a>
-        <a href="achv.html"><img src="./img/trophy.png" alt="Videos" /></a>
-        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
-        <a href="contact.html"
-          ><img src="./img/contacts.png" alt="Contacts"
-        /></a>
-        <a href="login.html"><img src="./img/login.png" alt="Login" /></a>
+        <a href="index.html" title="Home"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html" class="active" title="Calculator"><img src="./img/calc.png" alt="Calculator" /></a>
+        <a href="achv.html" title="Achievements"><img src="./img/trophy.png" alt="Achievements" /></a>
+        <a href="gemini.html" title="AI Chat"><img src="./img/gemini.png" alt="AI Chat" /></a>
+        <a href="contact.html" title="Contact"><img src="./img/contacts.png" alt="Contact" /></a>
+        <a href="login.html" title="Login"><img src="./img/login.png" alt="Login" /></a>
       </nav>
     </header>
 
-    <div class="banner">
-      <img src="./img/fa.png" alt="Forest Background" />
-    </div>
-    <main>
-      <div class="content">
-        <div class="row">
-          <div class="left-column">
-            <h1>Калкулатор за финанси<br><br></h1>
-            <p>Въведете сума и причини</p>
-            <hr />
-            <br />
-          <br>
-            <form id="finance-form" action="/calc" method="post">
-                <h3>Доходи</h3>
-                <br>
+    <!-- MAIN -->
+    <div class="page-content">
+      <main>
+        <div class="section-tag" style="margin-top:16px; margin-bottom:32px;">
+          <h2>Finance Calculator</h2>
+          <p>Enter your income and expenses to get personalized financial recommendations.</p>
+        </div>
+
+        <div class="calc-layout">
+          <!-- LEFT: Form panel (original form structure + JS preserved) -->
+          <div class="calc-form-col">
+            <form id="finance-form" action="/calc" method="post" style="max-width:100%; background:transparent; padding:0; border:none; animation:none;">
+
+              <!-- Income -->
+              <div class="calc-panel" style="margin-bottom:20px;">
+                <h2>💰 Income</h2>
                 <div id="income-entries">
-                  <div class="income-entry">
-                      <label>Сума:</label>
-                      <input type="number" name="sum[]" required />
-                      <br />
-                      <label>Причина за доход:</label>
+                  <div class="income-entry entry-block">
+                    <div class="form-group">
+                      <label>Amount (лв):</label>
+                      <input type="number" name="sum[]" placeholder="0.00" required min="0" step="0.01" />
+                    </div>
+                    <div class="form-group">
+                      <label>Source:</label>
                       <select name="income-reason[]" required onchange="toggleCustomReason(this)">
-                          <option value="job">Работа</option>
-                          <option value="other">Друго</option>
+                        <option value="job">💼 Employment</option>
+                        <option value="other">📦 Other</option>
                       </select>
-                      <br />
-                      <br>
+                    </div>
                   </div>
-              </div>
-              <br>
-              <button type="button" class="add" onclick="addIncomeEntry()">Добави още доход</button>
-              <br>
-              <hr>
-              <br>
-              <h3>Разходи</h3>
-              <br>
-              <div id="outcome-entries">
-                <div class="outcome-entry">
-                    <label>Сума:</label>
-                    <input type="number" name="sum[]" required />
-                    <br />
-                    <label>Причина за разход:</label>
-                    <select name="outcome-reason[]" required onchange="toggleCustomReason(this)">
-                        <option value="bills">Сметки</option>
-                        <option value="entertainment">Развлечения</option>
-                        <option value="food">Храна</option>
-                        <option value="transport">Транспорт</option>
-                        <option value="other">Друго</option>
-                    </select>
-                    <br />
-                    <br>
                 </div>
-            </div>
-            <br>
-            <button type="button" class="add" onclick="addOutcomeEntry()">Добави още разход</button>
-              <br />
-              <button type="submit">Изчисли</button>
+                <button type="button" class="add" onclick="addIncomeEntry()">+ Add Income Source</button>
+              </div>
+
+              <!-- Expenses -->
+              <div class="calc-panel" style="margin-bottom:20px;">
+                <h2>💸 Expenses</h2>
+                <div id="outcome-entries">
+                  <div class="outcome-entry entry-block">
+                    <div class="form-group">
+                      <label>Amount (лв):</label>
+                      <input type="number" name="sum[]" placeholder="0.00" required min="0" step="0.01" />
+                    </div>
+                    <div class="form-group">
+                      <label>Category:</label>
+                      <select name="outcome-reason[]" required onchange="toggleCustomReason(this)">
+                        <option value="bills">🧾 Bills</option>
+                        <option value="entertainment">🎭 Entertainment</option>
+                        <option value="food">🍔 Food</option>
+                        <option value="transport">🚗 Transport</option>
+                        <option value="other">📦 Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="add" onclick="addOutcomeEntry()">+ Add Expense</button>
+              </div>
+
+              <button type="submit" style="width:100%; font-size:1.05rem; padding:15px;">📊 Calculate My Finances</button>
             </form>
           </div>
-          <div class="right-column" id="result-display">
-            <h2 class="fixed-header">Финансови препоръки </h2>
-            <br>
-            <hr>
-            <br>
-            <p id="savings-result">Препоръчителни спестявания: </p>
-            <br>
-            <hr>
-            <br>
-            <p id="spending-result"> Препорачителни пари за свободно ползване: </p>
-            <br>
-            <br>
-            <button class="reset-button" id="reset-button">Нулирай</button>
+
+          <!-- RIGHT: Results panel -->
+          <div class="result-panel" id="result-display">
+            <h2 style="font-size:1.1rem; margin-bottom:20px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary);">📋 Results</h2>
+
+            <div class="result-line">
+              <span>💚 Recommended Savings</span>
+              <span class="result-value" id="savings-result">—</span>
+            </div>
+            <div class="result-line">
+              <span>🎯 Free Spending Budget</span>
+              <span class="result-value" id="spending-result">—</span>
+            </div>
+
+            <button class="btn-danger reset-button" id="reset-button" style="width:100%; margin-top:24px;">🔄 Reset</button>
+
+            <p style="margin-top:18px; font-size:0.8rem; text-align:center; opacity:0.6;">
+              Results will appear here after you calculate.
+            </p>
+          </div>
         </div>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
       <div class="footer-content">
-        За повече информация изпратете e-mail на
-        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
-          >gorskite4@gmail.com</a
-        >
+        © 2025 Gorski Finance &nbsp;|&nbsp;
+        <a href="mailto:gorskite4@gmail.com">gorskite4@gmail.com</a>
       </div>
       <nav class="footer-menu">
         <a href="index.html">Home</a>
         <a href="calc.html">Calculator</a>
         <a href="achv.html">Achievements</a>
         <a href="gemini.html">AI Chat</a>
-        <a href="contact.html">Contacts</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </footer>
+
+    <script>
+      window.addEventListener('scroll', function () {
+        document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+      });
+    </script>
     <script src="financeTracker.js"></script>
-    
-  <script src="script.js"></script>
-<body>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -3,139 +3,124 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gorski Login</title>
+    <title>Login — Gorski Finance</title>
+    <meta name="description" content="Sign in to your Gorski Finance account." />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
-    <style>
-      .notification {
-        display: none;
-        padding: 15px;
-        margin-bottom: 20px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-      }
-      .notification.success {
-        color: #155724;
-        background-color: #d4edda;
-        border-color: #c3e6cb;
-      }
-      .notification.error {
-        color: #721c24;
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
-      }
-    </style>
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-        <span>Gorski <small>Login</small></span>
-      </div>
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <a href="index.html" class="logo">
+        <img src="./img/gorsko-logo.png" alt="Gorski Logo" class="logo-img" />
+        <div class="logo-text">
+          <span class="brand">Gorski</span>
+          <span class="sub">Finance</span>
+        </div>
+      </a>
       <nav class="menu">
-        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
-        <a href="achv.html"
-          ><img src="./img/trophy.png" alt="Achievements"
-        /></a>
-        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
-        <a href="contact.html"
-          ><img src="./img/contacts.png" alt="Contacts"
-        /></a>
-        <a id="loginLink" href="/login.html"
-          ><img src="./img/login.png" alt="Login"
-        /></a>
+        <a href="index.html" title="Home"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html" title="Calculator"><img src="./img/calc.png" alt="Calculator" /></a>
+        <a href="achv.html" title="Achievements"><img src="./img/trophy.png" alt="Achievements" /></a>
+        <a href="gemini.html" title="AI Chat"><img src="./img/gemini.png" alt="AI Chat" /></a>
+        <a href="contact.html" title="Contact"><img src="./img/contacts.png" alt="Contact" /></a>
+        <a id="loginLink" href="/login.html" class="active" title="Login"><img src="./img/login.png" alt="Login" /></a>
       </nav>
     </header>
 
-    <div class="banner">
-      <img src="./img/forest_back.jpg" alt="Forest Background" />
-    </div>
-    <form id="loginForm" action="/login.html" method="post">
-      <div class="container">
-        <h1>Login</h1>
-        <p>Fill out to login</p>
-        <hr />
+    <!-- AUTH AREA -->
+    <div class="auth-page">
+      <form id="loginForm" action="/login.html" method="post">
+        <!-- Logo inside form -->
+        <div class="auth-logo">
+          <img src="./img/gorsko-logo.png" alt="Gorski Finance Logo" />
+          <h2>Welcome back</h2>
+          <p>Sign in to your Gorski Finance account</p>
+        </div>
+
         <div id="notification" class="notification"></div>
-        <br />
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
-        <br />
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-        <br />
-        <button type="submit">Login</button>
-        <p>Don't have an account? <a href="signup.html">Register here</a></p>
-      </div>
-    </form>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required autocomplete="username" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password" />
+        </div>
+
+        <button type="submit" style="width:100%; margin-top:8px;">Sign In →</button>
+
+        <div class="auth-link">
+          Don't have an account? <a href="signup.html">Create one</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
       <div class="footer-content">
-        За повече информация изпратете e-mail на
-        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
-          >gorskite4@gmail.com</a
-        >
+        © 2025 Gorski Finance &nbsp;|&nbsp;
+        <a href="mailto:gorskite4@gmail.com">gorskite4@gmail.com</a>
       </div>
       <nav class="footer-menu">
         <a href="index.html">Home</a>
         <a href="calc.html">Calculator</a>
         <a href="achv.html">Achievements</a>
         <a href="gemini.html">AI Chat</a>
-        <a href="contact.html">Contacts</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </footer>
+
     <script>
-      window.addEventListener("scroll", function () {
-        document.body.classList.toggle("scrolled", window.scrollY > 50);
+      window.addEventListener('scroll', function () {
+        document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
       });
-      fetch("/api/session")
-        .then((response) => response.json())
-        .then((data) => {
+
+      // If already logged in, redirect to profile
+      fetch('/api/session')
+        .then(response => response.json())
+        .then(data => {
           if (data.userId) {
-            window.location.href = "/profile.html";
+            window.location.href = '/profile.html';
           }
         })
-        .catch((error) => console.error("Session check error:", error));
+        .catch(error => console.error('Session check error:', error));
 
-      document.getElementById("loginForm").onsubmit = async function (event) {
+      // Login form submit (original logic preserved)
+      document.getElementById('loginForm').onsubmit = async function (event) {
         event.preventDefault();
-
         const formData = new FormData(this);
         const data = {
-          username: formData.get("username"),
-          password: formData.get("password"),
+          username: formData.get('username'),
+          password: formData.get('password'),
         };
 
         const response = await fetch(this.action, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
 
-        const notification = document.getElementById("notification");
-
+        const notification = document.getElementById('notification');
         try {
           const responseData = await response.json();
-
           if (response.ok && responseData.success) {
-            notification.innerText = "Успешен вход! Пренасочване...";
-            notification.className = "notification success";
-
-            setTimeout(() => {
-              window.location.href = responseData.redirect;
-            }, 1500);
+            notification.innerText = 'Успешен вход! Пренасочване...';
+            notification.className = 'notification success';
+            notification.style.display = 'block';
+            setTimeout(() => { window.location.href = responseData.redirect; }, 1500);
           } else {
-            notification.innerText =
-              responseData.error || "Грешка при влизане.";
-            notification.className = "notification error";
+            notification.innerText = responseData.error || 'Грешка при влизане.';
+            notification.className = 'notification error';
+            notification.style.display = 'block';
           }
         } catch (error) {
-          notification.innerText = "Грешка при обработка на отговора.";
-          notification.className = "notification error";
+          notification.innerText = 'Грешка при обработка на отговора.';
+          notification.className = 'notification error';
+          notification.style.display = 'block';
         }
-
-        notification.style.display = "block";
       };
     </script>
   </body>

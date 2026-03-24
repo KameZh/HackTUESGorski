@@ -3,97 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gorski Achievements</title>
-    <link rel="stylesheet" href="style_achv.css" />
+    <title>Achievements — Gorski Finance</title>
+    <meta name="description" content="View your financial achievements, expense charts, and savings progress." />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style_achv.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
-    <script>
-      window.addEventListener("scroll", function () {
-        document.body.classList.toggle("scrolled", window.scrollY > 50);
-      });
-    </script>
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-        <span>Gorski<br /><small>Achievements</small></span>
-      </div>
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <a href="index.html" class="logo">
+        <img src="./img/gorsko-logo.png" alt="Gorski Logo" class="logo-img" />
+        <div class="logo-text">
+          <span class="brand">Gorski</span>
+          <span class="sub">Achievements</span>
+        </div>
+      </a>
       <nav class="menu">
-        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
-        <a href="achv.html"
-          ><img src="./img/trophy.png" alt="Achievements"
-        /></a>
-        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
-        <a href="contact.html"
-          ><img src="./img/contacts.png" alt="Contacts"
-        /></a>
-        <a id="loginLink" href="/login.html"
-          ><img src="./img/login.png" alt="Login"
-        /></a>
+        <a href="index.html" title="Home"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html" title="Calculator"><img src="./img/calc.png" alt="Calculator" /></a>
+        <a href="achv.html" class="active" title="Achievements"><img src="./img/trophy.png" alt="Achievements" /></a>
+        <a href="gemini.html" title="AI Chat"><img src="./img/gemini.png" alt="AI Chat" /></a>
+        <a href="contact.html" title="Contact"><img src="./img/contacts.png" alt="Contact" /></a>
+        <a id="loginLink" href="/login.html" title="Login"><img src="./img/login.png" alt="Login" /></a>
       </nav>
     </header>
 
-    <div class="banner">
-      <img src="./img/fa.png" alt="Finance Calculating" />
+    <!-- MAIN -->
+    <div class="page-content">
+      <main>
+        <div class="section-tag" style="margin-top:16px; margin-bottom:32px;">
+          <h2>🏆 Your Achievements</h2>
+          <p>Track your financial progress with charts and insights.</p>
+        </div>
+
+        <!-- Charts grid -->
+        <div class="achv-grid">
+          <!-- Expense pie chart -->
+          <div class="chart-card">
+            <h3>Expense Distribution</h3>
+            <canvas id="expenseChart" width="300" height="300"></canvas>
+          </div>
+
+          <!-- Savings badge -->
+          <div class="chart-card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+            <h3>Monthly Savings</h3>
+            <div style="font-size:4rem; margin:16px 0;">💰</div>
+            <div class="savings-badge" id="monthlySavings">Loading…</div>
+            <p style="margin-top:12px; font-size:0.85rem;">Based on your latest calculation</p>
+          </div>
+        </div>
+
+        <!-- Savings progress chart (full width) -->
+        <div class="chart-card" style="margin-top:24px;">
+          <h3>Savings Progress</h3>
+          <canvas id="savingsChart" width="600" height="300"></canvas>
+        </div>
+
+        <!-- Income / Expense lists -->
+        <div class="achv-grid" style="margin-top:24px;">
+          <div class="chart-card">
+            <h3>💚 Income Breakdown</h3>
+            <div id="incomeSection">
+              <p style="color:var(--text-muted); font-size:0.9rem;">Loading income data…</p>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3>🔴 Expense Breakdown</h3>
+            <div id="expenseSection">
+              <p style="color:var(--text-muted); font-size:0.9rem;">Loading expense data…</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advice -->
+        <div class="advice-card" style="margin-top:24px;">
+          <h3 style="margin-bottom:12px;">💡 Saving Tips</h3>
+          <p id="adviceText" style="font-size:1rem; color:var(--text-secondary);">Loading advice…</p>
+          <div class="savings-badge" style="margin-top:16px;" id="potentialSavings">Potential Savings: Loading…</div>
+        </div>
+      </main>
     </div>
 
-    <main>
-      <div class="content">
-        <div class="top-head">
-          <h2>Your Achievements</h2>
-        </div>
-        <div class="row">
-          <div class="top-row">
-            <section class="diagram-section">
-              <h3>Expense Distribution</h3>
-              <canvas id="expenseChart" width="300" height="300"></canvas>
-            </section>
-          </div>
-
-          <div class="tag">
-            <section class="savings-section">
-              <h3>Money Save</h3>
-              <p id="monthlySavings">Loading...</p>
-            </section>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="row">
-            <div class="top-row">
-              <section class="chart-section">
-                <h3>Savings Progress</h3>
-                <canvas id="savingsChart" width="600" height="400"></canvas>
-                <div id="incomeSection">
-                  <h4>Доходи</h4>
-                </div>
-                <div id="expenseSection">
-                  <h4>Разходи</h4>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-
-        <div class="content">
-          <div class="row">
-            <div class="tag">
-              <section class="advice-section">
-                <h3>Saving Tips</h3>
-                <p id="adviceText">Loading advice...</p>
-                <p id="potentialSavings">Potential Savings: Loading...</p>
-              </section>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-
+    <!-- FOOTER -->
     <footer>
       <div class="footer-content">
-        For more information, email us at
+        © 2025 Gorski Finance &nbsp;|&nbsp;
         <a href="mailto:gorskite4@gmail.com">gorskite4@gmail.com</a>
       </div>
       <nav class="footer-menu">
@@ -101,41 +96,81 @@
         <a href="calc.html">Calculator</a>
         <a href="achv.html">Achievements</a>
         <a href="gemini.html">AI Chat</a>
-        <a href="contact.html">Contacts</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </footer>
 
-    <script src="server.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-          try {
-              const response = await fetch('/api/finance-data');
-              if (!response.ok) {
-                  throw new Error('Failed to fetch finance data');
-              }
-  
-              const data = await response.json();
-  
-              const incomeSection = document.getElementById('incomeSection');
-              incomeSection.innerHTML = ''; 
-              data.income.forEach(item => {
-                  const incomeItem = document.createElement('p');
-                  incomeItem.textContent = `Доход: ${item.type} - ${item.amount} лв`;
-                  incomeSection.appendChild(incomeItem);
-              });
-  
-  
-              const expenseSection = document.getElementById('expenseSection');
-              expenseSection.innerHTML = '';
-              data.expenses.forEach(item => {
-                  const expenseItem = document.createElement('p');
-                  expenseItem.textContent = `Разход: ${item.type} - ${item.amount} лв`;
-                  expenseSection.appendChild(expenseItem);
-              });
-          } catch (error) {
-              console.error('Error loading finance data:', error);
-          }
+      window.addEventListener('scroll', function () {
+        document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
       });
-  </script>
+
+      // Session check
+      fetch('/api/session')
+        .then(r => r.json())
+        .then(data => {
+          if (data.userId) {
+            document.getElementById('loginLink').href = '/profile.html';
+            document.getElementById('loginLink').innerHTML = '<img src="./img/profile.png" alt="Profile" />';
+          }
+        })
+        .catch(e => console.error('Session check error:', e));
+
+      // Finance data (original logic preserved)
+      document.addEventListener('DOMContentLoaded', async function () {
+        try {
+          const response = await fetch('/api/finance-data');
+          if (!response.ok) throw new Error('Failed to fetch finance data');
+
+          const data = await response.json();
+
+          const incomeSection = document.getElementById('incomeSection');
+          incomeSection.innerHTML = '';
+          if (data.income && data.income.length) {
+            data.income.forEach(item => {
+              const p = document.createElement('p');
+              p.textContent = `${item.type} — ${item.amount} лв`;
+              incomeSection.appendChild(p);
+            });
+          } else {
+            incomeSection.innerHTML = '<p style="color:var(--text-muted);">No income records yet.</p>';
+          }
+
+          const expenseSection = document.getElementById('expenseSection');
+          expenseSection.innerHTML = '';
+          if (data.expenses && data.expenses.length) {
+            data.expenses.forEach(item => {
+              const p = document.createElement('p');
+              p.textContent = `${item.type} — ${item.amount} лв`;
+              expenseSection.appendChild(p);
+            });
+          } else {
+            expenseSection.innerHTML = '<p style="color:var(--text-muted);">No expense records yet.</p>';
+          }
+        } catch (error) {
+          console.error('Error loading finance data:', error);
+        }
+      });
+
+      // Savings API
+      fetch('/api/savings')
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.length) {
+            const latest = data[data.length - 1];
+            document.getElementById('monthlySavings').textContent = `${latest.saved_amount} лв`;
+          }
+        })
+        .catch(() => { document.getElementById('monthlySavings').textContent = 'N/A'; });
+
+      // Advice API
+      fetch('/api/advice')
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('adviceText').textContent = data.tip || 'Keep saving!';
+          document.getElementById('potentialSavings').textContent = `Potential Savings: ${data.potential_savings || 0} лв`;
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>

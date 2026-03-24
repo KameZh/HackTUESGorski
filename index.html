@@ -3,137 +3,170 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gorski Finance Accountant</title>
+    <title>Gorski Finance — Your Personal Finance Assistant</title>
+    <meta name="description" content="Gorski Finance helps you track expenses, plan budgets, and reach your financial goals with AI-powered insights." />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="./img/gorsko-logo.png" type="image/x-icon" />
-    <script>
-      window.addEventListener("scroll", function () {
-        document.body.classList.toggle("scrolled", window.scrollY > 50);
-      });
-    </script>
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <img src="./img/gorsko-logo.png" alt="Logo" class="logo-img" />
-        <span>Gorski<br /><small>Finance Accountant</small></span>
-      </div>
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <a href="index.html" class="logo">
+        <img src="./img/gorsko-logo.png" alt="Gorski Logo" class="logo-img" />
+        <div class="logo-text">
+          <span class="brand">Gorski</span>
+          <span class="sub">Finance Accountant</span>
+        </div>
+      </a>
       <nav class="menu">
-        <a href="index.html"><img src="./img/home.png" alt="Home" /></a>
-        <a href="calc.html"><img src="./img/calc.png" alt="Calc" /></a>
-        <a href="achv.html"><img src="./img/trophy.png" alt="Achievements" /></a>
-        <a href="gemini.html"><img src="./img/gemini.png" alt="AI chat" /></a>
-        <a href="contact.html"
-          ><img src="./img/contacts.png" alt="Contacts"
-        /></a>
-        <a id="loginLink" href="/login.html"
-          ><img src="./img/login.png" alt="Login"
-        /></a>
+        <a href="index.html" class="active" title="Home"><img src="./img/home.png" alt="Home" /></a>
+        <a href="calc.html" title="Calculator"><img src="./img/calc.png" alt="Calculator" /></a>
+        <a href="achv.html" title="Achievements"><img src="./img/trophy.png" alt="Achievements" /></a>
+        <a href="gemini.html" title="AI Chat"><img src="./img/gemini.png" alt="AI Chat" /></a>
+        <a href="contact.html" title="Contact"><img src="./img/contacts.png" alt="Contact" /></a>
+        <a id="loginLink" href="/login.html" title="Login"><img id="loginImg" src="./img/login.png" alt="Login" /></a>
       </nav>
     </header>
 
-    <div class="banner">
-      <img src="./img/fa.png" alt="Finance Calculating" />
+    <!-- HERO -->
+    <div class="page-content">
+      <section class="hero" style="padding-top:100px; padding-bottom:80px;">
+        <div class="hero-badge">✦ HackTUES 11 — Hack the Wealth</div>
+        <h1 class="hero-title">
+          Master Your<br/>
+          <span class="gradient-text">Finances Effortlessly</span>
+        </h1>
+        <p class="hero-sub">
+          Gorski Finance is your all-in-one personal finance platform — track spending,
+          plan your budget, earn achievements, and get AI-powered advice in seconds.
+        </p>
+        <div class="hero-cta-group">
+          <button class="btn-primary" onclick="window.location.href='calc.html'">
+            💸 Start Calculating
+          </button>
+          <button class="btn-secondary" onclick="window.location.href='gemini.html'">
+            🤖 Ask AI Advisor
+          </button>
+        </div>
+      </section>
+
+      <!-- STATS -->
+      <main>
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Features</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">Budget Plans</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">AI</span>
+            <span class="stat-label">Powered Advice</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Free</span>
+          </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="section-tag">
+          <h2>What We Offer</h2>
+          <p>Everything you need to take full control of your personal finances.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Smart Budgeting</h3>
+            <p>Our system analyzes your income and expenses to create a personalized budget aligned with your financial goals.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Expense Tracking</h3>
+            <p>Easily track every transaction with automatic categorization and detailed reports showing where your money goes.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Recommendations</h3>
+            <p>Get personalized tips on reducing unnecessary spending and saving more based on your unique spending habits.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <h3>Achievements</h3>
+            <p>Stay motivated with a gamified achievement system that rewards you every time you hit a financial milestone.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Financial Analytics</h3>
+            <p>Visualize your financial health with easy-to-understand charts and graphs. Make informed decisions instantly.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Goal Planning</h3>
+            <p>Set monthly or yearly budget targets, track your progress and stay on course with smart notifications.</p>
+          </div>
+        </div>
+
+        <!-- WHY GORSKI -->
+        <div class="section-tag" style="margin-top:60px;">
+          <h2>Why Choose Gorski Finance</h2>
+          <p>Managing finances doesn't have to be complicated.</p>
+        </div>
+        <div class="card" style="max-width:800px; margin:0 auto 50px; text-align:center; padding:40px;">
+          <p style="font-size:1.1rem; line-height:1.8; color:var(--text-secondary);">
+            Our goal is to give you the tools and knowledge to make smarter financial decisions —
+            regardless of your current situation.
+            Whether you're starting from zero or optimizing an existing budget,
+            <strong style="color:var(--text-primary);">Gorski Finance</strong>
+            guides you every step of the way.
+          </p>
+          <div style="margin-top:28px;">
+            <button class="btn-primary" onclick="window.location.href='signup.html'" style="margin:0 auto;">
+              🚀 Get Started — It's Free
+            </button>
+          </div>
+        </div>
+      </main>
     </div>
-    <main>
-      <div class="content">
-        <div class="row">
-          <div class="top-head">
-            <h2>
-              Добре дошли в Gorski Finance<br /><small
-                >Вашият личен финансов асистент</small
-              >
-            </h2>
-          </div>
-        </div>
-      </div>
-      <div class="content">
-        <div class="row">
-          <div class="top-row">
-            <p>
-              Вземете контрол върху финансите си още днес!
-            </p>
-            <p>
-              Независимо дали искате да спестявате повече, да управлявате
-              разходите си или просто да имате по-ясна представа за финансовото си
-              здраве, ние сме тук, за да ви помогнем.
-            </p>
-          </div>
-          <div class="tag">
-            <h2>Какво предлагаме</h2>
-          </div>
-          <div class="columns">
-            <div class="left-column">
-              <ul class="list">
-                <li>
-                  Умно бюджетиране: Нашата интуитивна система анализира доходите
-                  и разходите ви, за да създаде персонализиран бюджет, съобразен
-                  с вашите финансови цели.
-                </li>
-                <li>
-                  Проследяване на разходите: Лесно проследявайте всяка стотинка,
-                  която харчите, с автоматично категоризиране и подробни отчети,
-                  които показват къде отиват парите ви.
-                </li>
-                <li>
-                  Персонализирани препоръки: Получавайте съвети как да намалите ненужните разходи и да спестявате повече, базирани на вашите уникални навици на харчене.
-                </li>
-                <li>
-                  Финансови анализи: Визуализирайте финансовото си здраве с лесни за разбиране диаграми и графики. Разберете как се харчат парите ви и вземайте информирани решения.
-                </li>
-              </ul>
-            </div>
-            <div class="right-column">
-              <img src="./img/index-finance.jpg" alt="Finance" title="Finance" style="width: 100%; height: auto;" />
-            </div>
-          </div>
-          <div class="tag"><h2>Защо да изберете Gorski Finance</h2></div>
-          <div class="bottom-row">
-            <p>
-              Управлението на финансите не трябва да е сложно. Нашата цел е да
-              ви осигурим инструментите и знанията, които да ви помогнат да
-              вземате по-разумни финансови решения. Независимо от финансовото ви
-              състояние, <strong>Gorski Finance</strong> ви дава напътствия, за да
-              постигнете целите си.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="content">
-        <div class="row">
-          <div class="top-row">
-            <p>Регистрирайте се и направете първата стъпка към овладяване на вашите финанси.<br /> Независимо дали започвате от нулата или искате да оптимизирате текущия си бюджет, ние ще бъдем до вас.</p>
-          </div>
-          <button type="button" onclick="window.location.href='calc.html'">Calculate Your Finances</button>
-        </div>
-    </main>
+
+    <!-- FOOTER -->
     <footer>
       <div class="footer-content">
-        За повече информация изпратете e-mail на
-        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new"
-          >gorskite4@gmail.com</a>
-      </div class="footer-content">
-      <div class="footer-content">
-        <p>© 2025 Gorski Finance. All rights reserved.</p>
+        © 2025 Gorski Finance. All rights reserved. &nbsp;|&nbsp;
+        <a href="mailto:gorskite4@gmail.com">gorskite4@gmail.com</a>
       </div>
       <nav class="footer-menu">
         <a href="index.html">Home</a>
         <a href="calc.html">Calculator</a>
         <a href="achv.html">Achievements</a>
         <a href="gemini.html">AI Chat</a>
-        <a href="contact.html">Contacts</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </footer>
+
     <script>
+      // Header scroll effect
+      window.addEventListener('scroll', function () {
+        document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+      });
+      // Stagger feature cards animation
+      document.querySelectorAll('.feature-card').forEach((card, i) => {
+        card.style.animationDelay = (i * 0.08) + 's';
+      });
+      // Session-based login icon swap (original logic preserved)
       fetch('/api/session')
-          .then(response => response.json())
-          .then(data => {
-              if (data.userId) {
-                  document.getElementById('loginLink').href = "/profile.html";
-                  document.getElementById('loginLink').innerHTML = '<img src="./img/profile.png" alt="Profile" />';
-              }
-          })
-          .catch(error => console.error('Session check error:', error));
+        .then(r => r.json())
+        .then(data => {
+          if (data.userId) {
+            document.getElementById('loginLink').href = '/profile.html';
+            document.getElementById('loginImg').src = './img/profile.png';
+            document.getElementById('loginImg').alt = 'Profile';
+            document.getElementById('loginLink').title = 'Profile';
+          }
+        })
+        .catch(e => console.error('Session check error:', e));
     </script>
   </body>
 </html>
